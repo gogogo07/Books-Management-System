@@ -1,3 +1,3 @@
 print('hello world')
 print("pppppp")
-print('123')
+print('1')
