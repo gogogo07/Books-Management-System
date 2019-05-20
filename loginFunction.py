@@ -7,6 +7,7 @@ from PyQt5.QtWidgets import QMessageBox, QLineEdit
 import sys
 import connect
 import userMain
+from admin import *
 
 
 class Login(QtWidgets.QMainWindow, Ui_loginWidgrt):
@@ -20,11 +21,15 @@ class Login(QtWidgets.QMainWindow, Ui_loginWidgrt):
         tempAccount=self.lineEdit.text()
         tempPassword=self.lineEdit_2.text()
         res = get_user(tempAccount)
-        if tempPassword == res[0][2]:
-            userWindow.account = tempAccount
-            userWindow.load()
-            userWindow.show()
+        if tempAccount == 'admin' and tempPassword == 'admin123':
+            adminWindowT.show()
             self.close()
+        elif len(res) != 0:
+            if tempPassword == res[0][2]:
+                userWindow.account = tempAccount
+                userWindow.load()
+                userWindow.show()
+                self.close()
         else:
             QMessageBox.warning(self, "错误", "密码错误，请重新输入", QMessageBox.Ok)
             self.lineEdit_2.clear()
@@ -112,6 +117,7 @@ if __name__ == '__main__':
     log = Login()
     res = Register()
     userWindow = userMain.userWindow()
+    adminWindowT = adminWindow()
     myRecord = userMain.myRecord()
     log.show()
 
