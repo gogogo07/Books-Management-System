@@ -16,6 +16,10 @@ class Login(QtWidgets.QMainWindow, Ui_loginWidgrt):
         self.setupUi(self)
         self.lineEdit_2.setEchoMode(QLineEdit.Password)
 
+    def keyPressEvent(self, event):
+        if event.key() == QtCore.Qt.Key_Return or event.key() == QtCore.Qt.Key_Enter:
+            self.login()
+
 
     def login(self):
         tempAccount=self.lineEdit.text()
@@ -62,26 +66,43 @@ class Register(QtWidgets.QMainWindow, Ui_registerWidget):
         if len(get_user(tempAccout)) != 0:
             QMessageBox.warning(self, "错误", "账号已注册", QMessageBox.Ok)
             self.lineEdit.clear()
+            self.lineEdit_2.clear()
+            self.lineEdit_3.clear()
         elif len(tempAccout) > 12:
             QMessageBox.warning(self, "错误", "账号长度太长", QMessageBox.Ok)
             self.lineEdit.clear()
+            self.lineEdit_2.clear()
+            self.lineEdit_3.clear()
         elif len(tempAccout) < 8:
             QMessageBox.warning(self, "错误", "账号长度太短", QMessageBox.Ok)
             self.lineEdit.clear()
+            self.lineEdit_2.clear()
+            self.lineEdit_3.clear()
         elif len(tempPassword) >12:
             QMessageBox.warning(self, "错误", "密码长度太长", QMessageBox.Ok)
             self.lineEdit_2.clear()
+            self.lineEdit_3.clear()
         elif len(tempPassword) < 8:
             QMessageBox.warning(self, "错误", "账号长度太短", QMessageBox.Ok)
             self.lineEdit_2.clear()
+            self.lineEdit_3.clear()
         elif tempPassword != tempPassword2:
             QMessageBox.warning(self, "错误", "两次输入的密码不匹配", QMessageBox.Ok)
+            self.lineEdit_2.clear()
+            self.lineEdit_3.clear()
         else:
             print("注册成功")
             QMessageBox.warning(self, "恭喜", "注册成功", QMessageBox.Ok)
             add_account(tempAccout, tempPassword)
             self.hide()
             log.show()
+
+    def registerBack(self):
+        self.hide()
+        log.show()
+        self.lineEdit.clear()
+        self.lineEdit_2.clear()
+        self.lineEdit_3.clear()
 
 
 

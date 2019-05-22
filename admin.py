@@ -41,6 +41,10 @@ class adminPutaway(QtWidgets.QMainWindow,Ui_adminPutaway):
         super(adminPutaway,self).__init__()
         self.setupUi(self)
 
+    def keyPressEvent(self, event):
+        if event.key() == QtCore.Qt.Key_Return or event.key() == QtCore.Qt.Key_Enter:
+            self.adminPutaway()
+
     def adminPutawayDue(self):
         tempname=self.adminPutawayNameEdit.text()
         tempkind=self.adminPutawayKindEdit.text()
@@ -71,7 +75,7 @@ class adminPutaway(QtWidgets.QMainWindow,Ui_adminPutaway):
                                     book_name,book_author, book_kind, book_number, book_left, book_lending) \
                                     VALUES(%s, %s, %s, %s, %s, %s)", (tempname, tempauthor, tempkind, tempno, tempnum, 0))
                     con.commit()
-                    print ("添加成功")
+                    QMessageBox.warning(self, "", "书籍上架成功", QMessageBox.Ok)
                 except Exception as e:
                     con.rollback()
                     print (e)
@@ -111,40 +115,39 @@ class adminBookManage(QtWidgets.QMainWindow,Ui_adminBookManage):
         self.adminBookTableWidget.setSelectionBehavior(QAbstractItemView.SelectRows)
         self.adminBookTableWidget.setEditTriggers(QAbstractItemView.NoEditTriggers)
 
+    def keyPressEvent(self, event):
+        if event.key() == QtCore.Qt.Key_Return or event.key() == QtCore.Qt.Key_Enter:
+            self.adminBookFind()
 
     def adminBookSold(self):
         print()
 
     def adminBookFind(self):
-        bookFind = self.adminBookFindEdit.text()  # 所查找的图书名称
-        d = {}
-        if bookFind != '':
-            d['book_name'] = bookFind
-            d['book_author'] = bookFind
-        kind = self.Combox.currentIndex()  # 所查找的图书种类
-        bookKinds = [0, 'all', 1, '自传', 2, '医学', 3, '文学', 4, '计算机']
-        for i in range(len(bookKinds)):
-            if bookKinds[i] == kind:
-                d['book_kind'] = bookKinds[i + 1]
-        results = search(**d)
+        bookkind = self.comboBox.currentText()
+        bookdata = self.adminBookFindEdit.text()
+        print(bookkind)
+        print(bookdata)
+        results=adminFindFunction(bookdata, bookkind)
         if len(results) == 0:
-            QMessageBox.warning(self, "警告", "抱歉，没有找到与‘" + bookFind + "’相关的书籍，建议适当减少筛选条件",
-                                QMessageBox.Ok)
-        self.userTableWidget.setRowCount(len(results))
-        row = 0
-        list = 0
-        for result in results:
-            for l in range(1, 7):
-                newItem(self, result[l], row, list)
-                list += 1
-            row += 1
-            list = 0
-        red(self, len(results))
+            QMessageBox.Warning(self, "警告", "未找到符合的书籍", QMessageBox.Ok)                 # 结果为0查找失败返回
+            self.adminBookFindEdit.clear()
+            return
+        else:
+            self.adminBookTableWidget.setRowCount(len(results))
+            for i in range(len(results)):
+                self.adminBookTableWidget.setItem(i, 0, QTableWidgetItem(results[i][1]))        #设置单元格内容
+                self.adminBookTableWidget.setItem(i, 1, QTableWidgetItem(results[i][2]))
+                self.adminBookTableWidget.setItem(i, 2, QTableWidgetItem(results[i][3]))
+                self.adminBookTableWidget.setItem(i, 3, QTableWidgetItem(results[i][4]))
+                self.adminBookTableWidget.setItem(i, 4, QTableWidgetItem(results[i][5]))
+                self.adminBookTableWidget.setItem(i, 5, QTableWidgetItem(results[i][6]))
+                self.adminBookTableWidget.setItem(i, 6, QTableWidgetItem(results[i][6]))                                #
+
 
     def adminBookManageBack(self):
         self.adminBookFindEdit.clear()
         self.adminBookTableWidget.clearContents()                                                                       # 清空信息，并将格式初始化
-        self.adminBookTableWidget.setRowCount(5)
+        self.adminBookTableWidget.setRowCount(0)
         self.close()
 
 
@@ -174,7 +177,7 @@ class adminWindow(QtWidgets.QMainWindow,Ui_adminWindow):
         if reply==QMessageBox.No:
            return
         else:
-            sys.exit(app.exec())
+            sys.exit(self.app.exec())
 
 
 
@@ -191,14 +194,6 @@ class adminUserManage(QtWidgets.QMainWindow,Ui_adminUserManageWidget):
         self.adminUserTable2.clearContents()
         self.adminUserLineEdit2.clear()
         self.adminUserTable2.setRowCount(8)
-        self.adminUserTable2.setVerticalHeaderItem(0, QTableWidgetItem("记录1"))
-        self.adminUserTable2.setVerticalHeaderItem(1, QTableWidgetItem("记录2"))
-        self.adminUserTable2.setVerticalHeaderItem(2, QTableWidgetItem("记录3"))
-        self.adminUserTable2.setVerticalHeaderItem(3, QTableWidgetItem("记录4"))
-        self.adminUserTable2.setVerticalHeaderItem(4, QTableWidgetItem("记录5"))
-        self.adminUserTable2.setVerticalHeaderItem(5, QTableWidgetItem("记录6"))
-        self.adminUserTable2.setVerticalHeaderItem(6, QTableWidgetItem("记录7"))
-        self.adminUserTable2.setVerticalHeaderItem(7, QTableWidgetItem("记录8"))
         self.adminUserLab.setText("用户名")
         self.close()              # 隐藏子窗口
 
@@ -211,6 +206,10 @@ class adminUserManage(QtWidgets.QMainWindow,Ui_adminUserManageWidget):
         state=''
         if state=='N':
             state='Y'
+
+    def keyPressEvent(self, event):
+        if event.key() == QtCore.Qt.Key_Return or event.key() == QtCore.Qt.Key_Enter:
+            self.adminUserFind()
 
     def adminUserFind(self):
         tempusername=self.adminUserLineEdit2.text()             # 获取用户xing
@@ -234,28 +233,30 @@ class adminUserManage(QtWidgets.QMainWindow,Ui_adminUserManageWidget):
             QMessageBox.warning(self,"警告", '抱歉，没有找到与%s有关的书。'%(tempusername), QMessageBox.Ok)
 
 
-def adminFindFunction(bookData = None,bookKind = None):
-     con,cursor=connect.connection()
-     sql = ''
-     if bookKind == '书籍':
-         sql = 'SELECT * FROM books WHERE book_name REGEXP "%s"' % (bookData)       # 在数据库里查找相应信息
-     elif bookKind=='作者':
-         sql = 'SELECT * FROM books WHERE book_author REGEXP "%s"' %(bookData)
-     elif bookKind=='序列号':
-         sql = 'SELECT * FROM books WHERE book_no REGEXP "%s"' %(bookData)
-     elif bookKind=='种类':
-         sql = 'SELECT * FROM books WHERE book_kind REGEXP "%s"' %(bookData)
-     try:
-         cursor.execute(sql)
-         results = cursor.fetchall()
-         cursor.close()
-         con.close()
-         return results
-     except:
-         print('获取失败')
-         cursor.close()
-         con.close()
-         return None
+def adminFindFunction(bookData=None, bookKind=None):
+    con, cursor = connect.connection()
+    sql = ''
+    if bookKind == '书名':
+        sql = 'SELECT * FROM books WHERE book_name REGEXP "%s"' % (bookData)  # 在数据库里查找相应信息
+    elif bookKind == '作者':
+        sql = 'SELECT * FROM books WHERE book_author REGEXP "%s"' % (bookData)
+    elif bookKind == '序列号':
+        sql = 'SELECT * FROM books WHERE book_no REGEXP "%s"' % (bookData)
+    elif bookKind == '全部':
+        pass
+    elif bookKind == '种类':
+        sql = 'SELECT * FROM books WHERE book_kind REGEXP "%s"' % (bookData)
+    try:
+        cursor.execute(sql)
+        results = cursor.fetchall()
+        cursor.close()
+        con.close()
+        return results
+    except:
+        QMessageBox.Warning("", "未查询到该图书", QMessageBox.Ok)
+        cursor.close()
+        con.close()
+        return None
 
 
 def adminUserFindFunction(userData):
