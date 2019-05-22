@@ -126,11 +126,9 @@ def add_account(*mes):
         print ('添加成功')
     except Exception as e:
         con.rollback()
-        print (e)
     finally:
         cursor.close()
         con.close()
-
 
 
 if __name__ == '__main__':

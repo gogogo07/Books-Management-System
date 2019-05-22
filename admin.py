@@ -43,7 +43,7 @@ class adminPutaway(QtWidgets.QMainWindow,Ui_adminPutaway):
 
     def keyPressEvent(self, event):
         if event.key() == QtCore.Qt.Key_Return or event.key() == QtCore.Qt.Key_Enter:
-            self.adminPutaway()
+            self.adminPutawayDue()
 
     def adminPutawayDue(self):
         tempname=self.adminPutawayNameEdit.text()
@@ -84,12 +84,12 @@ class adminPutaway(QtWidgets.QMainWindow,Ui_adminPutaway):
                     con.close()
 
             else:
-                sql = "UPDATE books SET book_left = %s WHERE book_number = '%s'" % (res[0][5] + 1, tempnum)
+                sql = "UPDATE books SET book_left = book_left + 1 WHERE book_number = '%s'" % (tempnum)
                 try:
                     cursor.execute(sql)
                     con.commit()
                     print("更新成功")
-                    QMessageBox.Warning(self, "消息", "上架成功", QMessageBox.Ok)
+                    QMessageBox.warning(self, "", "书籍上架成功", QMessageBox.Ok)
                 except Exception as e:
                     con.rollback()
                     print(e)
@@ -129,7 +129,8 @@ class adminBookManage(QtWidgets.QMainWindow,Ui_adminBookManage):
         print(bookdata)
         results=adminFindFunction(bookdata, bookkind)
         if len(results) == 0:
-            QMessageBox.Warning(self, "警告", "未找到符合的书籍", QMessageBox.Ok)                 # 结果为0查找失败返回
+            # QMessageBox.Warning(self, "", "未找到符合的书籍", QMessageBox.Ok)                 # 结果为0查找失败返回
+            print ('没找到')
             self.adminBookFindEdit.clear()
             return
         else:
@@ -214,6 +215,7 @@ class adminUserManage(QtWidgets.QMainWindow,Ui_adminUserManageWidget):
     def adminUserFind(self):
         tempusername=self.adminUserLineEdit2.text()             # 获取用户xing
         results = adminUserFindFunction(tempusername)
+        print (results)
         if len(results) != 0:
             lending = eval(results[0][4])
             history = eval(results[0][5])
@@ -274,7 +276,8 @@ def adminUserFindFunction(userData):
         print('获取失败')
         cursor.close()
         con.close()
-        return None
+        p = tuple()
+        return p
 
 
 def getdata(sql):

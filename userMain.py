@@ -201,7 +201,6 @@ class userWindow(QtWidgets.QWidget, Ui_userWindow):
                 QMessageBox.warning(self, "警告", "‘"+bookName+"’已经没有剩余量了！", QMessageBox.Ok)
             else :
                 """Todo 借阅图书（记录+图书，剩余量-1）"""
-                print(self.user)
                 lendTime = time.strftime("%Y-%m-%d", time.localtime())  # 获取借阅图书的时间
 
                 self.user.lending.append(bookName)
@@ -213,7 +212,6 @@ class userWindow(QtWidgets.QWidget, Ui_userWindow):
                     cursor.execute("UPDATE books SET book_left = book_left - 1 ,book_lending = book_lending + 1 WHERE book_name = %s",
                         (bookName))
                     con.commit()
-                    print("更新成功")
                 except Exception as e:
                     con.rollback()
                     print(e)
@@ -263,7 +261,6 @@ def search(book_name = None, book_author = None, book_kind = None):
         con.close()
         return results
     except:
-        print ('获取失败')
         cursor.close()
         con.close()
         return None
@@ -293,4 +290,3 @@ def red(self,bookTotal):
         bookNumber = int(str)
         if bookNumber == 0:
             cellItem.setForeground(QBrush(QColor(255, 0, 0)))                           # 红色
-
