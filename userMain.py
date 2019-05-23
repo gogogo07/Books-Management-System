@@ -198,34 +198,38 @@ class userWindow(QtWidgets.QWidget, Ui_userWindow):
                 return
             cellItem1 = self.userTableWidget.item(curRow, 0)                            # 获取图书名称
             bookName = cellItem1.text()
-            cellItem2 = self.userTableWidget.item(curRow, 4)                            # 获取图书剩余量
-            str1 = cellItem2.text()
-            bookNumber = int(str1)
-            if bookNumber <= 0:
-                QMessageBox.warning(self, "警告", "‘"+bookName+"’已经没有剩余量了！", QMessageBox.Ok)
-            else :
-                """Todo 借阅图书（记录+图书，剩余量-1）"""
-                lendTime = time.strftime("%Y-%m-%d", time.localtime())  # 获取借阅图书的时间
+            print (self.user.lending)
+            if bookName in self.user.lending:
+                QMessageBox.warning(self, "警告", "这本书你已经借了，而且还没有归还，不可重复再借同一本书。", QMessageBox.Yes)
+            else:
+                cellItem2 = self.userTableWidget.item(curRow, 4)                            # 获取图书剩余量
+                str1 = cellItem2.text()
+                bookNumber = int(str1)
+                if bookNumber <= 0:
+                    QMessageBox.warning(self, "警告", "‘"+bookName+"’已经没有剩余量了！", QMessageBox.Ok)
+                else :
+                    """Todo 借阅图书（记录+图书，剩余量-1）"""
+                    lendTime = time.strftime("%Y-%m-%d", time.localtime())  # 获取借阅图书的时间
 
-                self.user.lending.append(bookName)
-                self.user.lending.append(lendTime)
-                lending = str(self.user.lending)
-                try: #借书-用户添加信息
-                    cursor.execute("UPDATE users SET user_lendingnum = user_lendingnum+1, user_lending = %s WHERE user_account = %s",
-                                   (lending, self.account))
-                    cursor.execute("UPDATE books SET book_left = book_left - 1 ,book_lending = book_lending + 1 WHERE book_name = %s",
-                        (bookName))
-                    con.commit()
-                except Exception as e:
-                    con.rollback()
-                    print(e)
-                finally:
-                    cursor.close()
-                    con.close()
+                    self.user.lending.append(bookName)
+                    self.user.lending.append(lendTime)
+                    lending = str(self.user.lending)
+                    try: #借书-用户添加信息
+                        cursor.execute("UPDATE users SET user_lendingnum = user_lendingnum+1, user_lending = %s WHERE user_account = %s",
+                                       (lending, self.account))
+                        cursor.execute("UPDATE books SET book_left = book_left - 1 ,book_lending = book_lending + 1 WHERE book_name = %s",
+                            (bookName))
+                        con.commit()
+                    except Exception as e:
+                        con.rollback()
+                        print(e)
+                    finally:
+                        cursor.close()
+                        con.close()
 
-                QMessageBox.information(self, "恭喜您", "您已成功借阅‘"+bookName+"’图书", QMessageBox.Ok)
-                self.load()
-                self.userFind()
+                    QMessageBox.information(self, "恭喜您", "您已成功借阅‘"+bookName+"’图书", QMessageBox.Ok)
+                    self.load()
+                    self.userFind()
 
     def userBookRecommend(self):
         """推荐图书"""
