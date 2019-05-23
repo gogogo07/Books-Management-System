@@ -72,10 +72,14 @@ class myRecord(QtWidgets.QWidget, Ui_myRecord):
         if self.account != None:
             con, cursor = connect.connection()                                          # 连接数据库
             curRow = self.recordTableWidget.currentRow()                                # 获取光标所点击的行数
-            cellItem1 = self.recordTableWidget.item(curRow, 0)                          # 获取是否归还信息
-            bookName = cellItem1.text()                                                 # 获取选中图书的信息
-            if curRow < 0 :
-                QMessageBox.warning(self, "警告", "请选择你要归还的图书！", QMessageBox.Yes)
+            cellItem1 = self.recordTableWidget.item(curRow, 0)
+            if cellItem1 != None: # 获取是否归还信息
+                bookName = cellItem1.text()                                                 # 获取选中图书的信息
+            else:
+                QMessageBox.warning(self, "警告","请选择你要归还的图书！", QMessageBox.Yes)
+                return
+            """if curRow < 0 :
+                QMessageBox.warning(self, "警告", "请选择你要归还的图书！", QMessageBox.Yes)"""
             cellItem2 = self.recordTableWidget.item(curRow, 2)                          # 获取是否归还信息
             str2 = cellItem2.text()
             if  str2 != "----":
