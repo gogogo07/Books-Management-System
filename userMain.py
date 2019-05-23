@@ -109,9 +109,22 @@ class myRecord(QtWidgets.QWidget, Ui_myRecord):
                     except Exception as e:
                         print(e)
                         con.rollback()
-                    finally:
+                    """finally:
                         cursor.close()
+                        con.close()"""
+
+                    """将记录保存到数据库中"""
+                    try:
+                        cursor.execute("INSERT INTO records(user_name, operator, book_name, time) VALUES(%s, %s, %s, %s)",
+                                       (self.user.account, '归还了', bookName, returnTime))
+                        con.commit()
+                        print ("记录保存成功")
+                    except Exception as e:
+                        con.rollback()
+                        print (e)
+                    finally:
                         con.close()
+                        cursor.close()
 
                     QMessageBox().information (self, "成功", "成功归换"+bookName+"图书，欢迎您继续借阅图书", QMessageBox.Ok)
                     self.tableShow()
@@ -223,9 +236,20 @@ class userWindow(QtWidgets.QWidget, Ui_userWindow):
                     except Exception as e:
                         con.rollback()
                         print(e)
+
+                    """保存借阅记录"""
+                    try:
+                        cursor.execute(
+                            "INSERT INTO records(user_name, operator, book_name, time) VALUES(%s, %s, %s, %s)",
+                            (self.user.account, '借阅了', bookName, lendTime))
+                        con.commit()
+                        print("记录保存成功")
+                    except Exception as e:
+                        con.rollback()
+                        print(e)
                     finally:
-                        cursor.close()
                         con.close()
+                        cursor.close()
 
                     QMessageBox.information(self, "恭喜您", "您已成功借阅‘"+bookName+"’图书", QMessageBox.Ok)
                     self.load()

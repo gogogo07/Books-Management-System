@@ -15,6 +15,7 @@ class adminBook(QtWidgets.QMainWindow, Ui_adminBook):
     def __init__(self):
         super(adminBook,self).__init__()
         self.setupUi(self)
+        self.messageShow()
         self.chillBookManWin = adminBookManage()
         self.chillPutawayWin = adminPutaway()
 
@@ -29,10 +30,37 @@ class adminBook(QtWidgets.QMainWindow, Ui_adminBook):
         self.chillPutawayWin.show()
 
     def messageShow(self):
-        pass
+        self.adminBookSumLab.setText("当前图书馆的藏书为： " + str(getBookSum()))
+        records = getRecords()
+        self.adminBookLab1.setText(records[0][1] + '于' + records[0][4] + records[0][2] + '一本' + records[0][3] + '。')
+        self.adminBookLab2.setText(records[1][1] + '于' + records[1][4] + records[1][2] + '一本' + records[1][3] + '。')
+        self.adminBookLab3.setText(records[2][1] + '于' + records[2][4] + records[2][2] + '一本' + records[2][3] + '。')
+        self.adminBookLab4.setText(records[3][1] + '于' + records[3][4] + records[3][2] + '一本' + records[3][3] + '。')
+        self.adminBookLab5.setText(records[4][1] + '于' + records[4][4] + records[4][2] + '一本' + records[4][3] + '。')
 
 
+def getBookSum():
+    con, cursor = connect.connection()
+    sql = "SELECT COUNT(1) FROM books"
+    cursor.execute(sql)
+    sum = cursor.fetchone()
+    cursor.close()
+    con.close()
+    return sum[0]
 
+
+def getRecords():
+    con, cursor = connect.connection()
+    sql = "SELECT * FROM records ORDER BY id DESC"
+    cursor.execute(sql)
+    results = list()
+    for _ in range(5):
+        res = cursor.fetchone()
+        res = list(res)
+        results.append(res)
+    cursor.close()
+    con.close()
+    return results
 
 
 class adminPutaway(QtWidgets.QMainWindow,Ui_adminPutaway):
@@ -127,10 +155,12 @@ class adminBookManage(QtWidgets.QMainWindow,Ui_adminBookManage):
             return
         tempname = self.adminBookTableWidget.item(cloum,0).text()
         tempno = self.adminBookTableWidget.item(cloum,3).text()
-
-
-
-
+        reply = QMessageBox.question(self, '信息', '是否确认下架该书？',
+                                     QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+        if reply == QMessageBox.Yes:
+            deleteBooks(tempname)
+        else:
+            return
 
 
     def adminBookFind(self):
@@ -310,6 +340,21 @@ def getdata(sql):
 def getuser_inf(user):
     sql = 'SELECT * FROM users WHERE user_account REGEXP "%s"' % (user)
     return getdata(sql)
+
+
+def deleteBooks(bookName):
+    con, cursor = connect.connection()
+    sql = "DELETE FROM books WHERE book_name = '%s'" % (bookName)
+    try:
+        cursor.execute(sql)
+        con.commit()
+        print ("删除成功")
+    except Exception as e:
+        con.rollback()
+        print (e)
+    finally:
+        cursor.close()
+        con.close()
 
 
 def red(self, bookTotal):
