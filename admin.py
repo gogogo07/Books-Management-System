@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QAbstractItemView, QMessageBox, QTableWidgetItem
+from PyQt5.QtWidgets import *
 from adminUserManage import Ui_adminUserManageWidget
 from adminWindow import Ui_adminWindow
 from adminPutaway import Ui_adminPutaway
@@ -40,6 +40,7 @@ class adminPutaway(QtWidgets.QMainWindow,Ui_adminPutaway):
     def __init__(self):
         super(adminPutaway,self).__init__()
         self.setupUi(self)
+        self.adminPutawayNameEdit.setFocus()
 
     def keyPressEvent(self, event):
         if event.key() == QtCore.Qt.Key_Return or event.key() == QtCore.Qt.Key_Enter:
@@ -75,7 +76,7 @@ class adminPutaway(QtWidgets.QMainWindow,Ui_adminPutaway):
                                     book_name,book_author, book_kind, book_number, book_left, book_lending) \
                                     VALUES(%s, %s, %s, %s, %s, %s)", (tempname, tempauthor, tempkind, tempno, tempnum, 0))
                     con.commit()
-                    QMessageBox.warning(self, "", "书籍上架成功", QMessageBox.Ok)
+                    QMessageBox.Warning(self, "", "书籍上架成功", QMessageBox.Ok)
                 except Exception as e:
                     con.rollback()
                     print (e)
@@ -115,12 +116,22 @@ class adminBookManage(QtWidgets.QMainWindow,Ui_adminBookManage):
         self.adminBookTableWidget.setSelectionBehavior(QAbstractItemView.SelectRows)
         self.adminBookTableWidget.setEditTriggers(QAbstractItemView.NoEditTriggers)
 
+
     def keyPressEvent(self, event):
         if event.key() == QtCore.Qt.Key_Return or event.key() == QtCore.Qt.Key_Enter:
             self.adminBookFind()
 
     def adminBookSold(self):
-        print()
+        cloum = self.adminBookTableWidget.currentRow()
+        if cloum == -1:
+            return
+        tempname = self.adminBookTableWidget.item(cloum,0).text()
+        tempno = self.adminBookTableWidget.item(cloum,3).text()
+
+
+
+
+
 
     def adminBookFind(self):
         bookkind = self.comboBox.currentText()
@@ -130,7 +141,7 @@ class adminBookManage(QtWidgets.QMainWindow,Ui_adminBookManage):
         results=adminFindFunction(bookdata, bookkind)
         if len(results) == 0:
             # QMessageBox.Warning(self, "", "未找到符合的书籍", QMessageBox.Ok)                 # 结果为0查找失败返回
-            print ('没找到')
+            QMessageBox.warning(self, "警告", "未找到符合书籍", QMessageBox.Ok)
             self.adminBookFindEdit.clear()
             return
         else:
@@ -188,6 +199,7 @@ class adminUserManage(QtWidgets.QMainWindow,Ui_adminUserManageWidget):
         self.setupUi(self)                # 初始化界面
         self.adminUserTable2.setEditTriggers(QAbstractItemView.NoEditTriggers)       # 设置tablewidget为只读
         self.adminUserTable2.setSelectionBehavior(QAbstractItemView.SelectRows)          # 设置tablewidge为单行选中
+        self.adminUserLineEdit2.setFocus()
 
 
 
@@ -255,7 +267,6 @@ def adminFindFunction(bookData=None, bookKind=None):
         con.close()
         return results
     except:
-        QMessageBox.Warning("", "未查询到该图书", QMessageBox.Ok)
         cursor.close()
         con.close()
         return None
