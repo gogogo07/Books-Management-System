@@ -16,6 +16,8 @@ class Login(QtWidgets.QMainWindow, Ui_loginWidgrt):
         self.setupUi(self)
         self.lineEdit_2.setEchoMode(QLineEdit.Password)         # 设置密码黑点遮挡
         self.lineEdit.setFocus()                        # 设置焦点
+        self.setWindowTitle("登陆")
+        self.setWindowIcon(QIcon('main.jpg'))
 
     def keyPressEvent(self, event):
         if event.key() == QtCore.Qt.Key_Return or event.key() == QtCore.Qt.Key_Enter:
@@ -55,6 +57,8 @@ class Register(QtWidgets.QMainWindow, Ui_registerWidget):
         self.lineEdit_2.setEchoMode(QLineEdit.Password)
         self.lineEdit_3.setEchoMode(QLineEdit.Password)
         self.lineEdit.setFocus()
+        self.setWindowTitle("注册")
+        self.setWindowIcon(QIcon('main.jpg'))
 
     def registerDue(self):
         tempAccout = self.lineEdit.text()

@@ -12,7 +12,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_adminWindow(object):
     def setupUi(self, adminWindow):
         adminWindow.setObjectName("adminWindow")
-        adminWindow.resize(400, 300)
+        adminWindow.resize(400, 281)
         adminWindow.setStyleSheet("/*\n"
 "* The MIT License (MIT)\n"
 "*\n"
@@ -984,16 +984,6 @@ class Ui_adminWindow(object):
         self.label.setGeometry(QtCore.QRect(93, 31, 221, 41))
         self.label.setObjectName("label")
         adminWindow.setCentralWidget(self.centralWidget)
-        self.menuBar = QtWidgets.QMenuBar(adminWindow)
-        self.menuBar.setGeometry(QtCore.QRect(0, 0, 400, 30))
-        self.menuBar.setObjectName("menuBar")
-        adminWindow.setMenuBar(self.menuBar)
-        self.mainToolBar = QtWidgets.QToolBar(adminWindow)
-        self.mainToolBar.setObjectName("mainToolBar")
-        adminWindow.addToolBar(QtCore.Qt.TopToolBarArea, self.mainToolBar)
-        self.statusBar = QtWidgets.QStatusBar(adminWindow)
-        self.statusBar.setObjectName("statusBar")
-        adminWindow.setStatusBar(self.statusBar)
 
         self.retranslateUi(adminWindow)
         self.adminUserManageBtn.clicked.connect(adminWindow.adminUserManage)
