@@ -13,6 +13,7 @@ import os
 
 
 class myRecord(QtWidgets.QWidget, Ui_myRecord):
+    ret =pyqtSignal()
     def __init__(self):
         super(myRecord, self).__init__()
         self.account = None
@@ -21,7 +22,6 @@ class myRecord(QtWidgets.QWidget, Ui_myRecord):
         self.user = classes.User()
         self.load()
         self.tableShow()
-
 
     def tableShow(self):
         """表格初始化"""
@@ -65,6 +65,8 @@ class myRecord(QtWidgets.QWidget, Ui_myRecord):
                 history = eval(results[0][5])
                 self.user.setdata(results[0][1], results[0][2], results[0][3], lending, history)
             # self.user.show()
+            self.setWindowTitle(str(self.account)+"的记录")
+            self.setWindowIcon(QIcon('main.jpg'))                                       # 设置窗体标题图标
 
 
     def userReturn(self):
@@ -129,7 +131,7 @@ class myRecord(QtWidgets.QWidget, Ui_myRecord):
                     QMessageBox().information (self, "成功", "成功归换"+bookName+"图书，欢迎您继续借阅图书", QMessageBox.Ok)
                     self.tableShow()
                     self.load()
-
+                    self.ret.emit()
 
 class userWindow(QtWidgets.QWidget, Ui_userWindow):
     def __init__(self):
@@ -156,6 +158,16 @@ class userWindow(QtWidgets.QWidget, Ui_userWindow):
             history = eval(results[0][5])
             self.user.setdata(results[0][1], results[0][2], results[0][3], lending, history)
             # self.user.show()
+            timee = int(time.strftime("%H", time.localtime()))
+            print(timee)
+            if timee < 5 or timee > 18:
+                hellostr = "晚上好！"
+            elif timee >5 and timee <12:
+                hellostr = "上午好！"
+            else:
+                hellostr = "下午好！"
+            self.userLabel.setText("尊敬的 " + str(self.account) + " 用户，"+hellostr)
+            self.setWindowIcon(QIcon('main.jpg'))                                       # 设置窗体标题图标
 
     def userMyRecord(self):
         """我的记录"""
@@ -163,7 +175,10 @@ class userWindow(QtWidgets.QWidget, Ui_userWindow):
         self.child.account = self.account
         self.child.load()
         self.child.tableShow()
+        self.child.ret.connect(self.load)
+        self.child.ret.connect(self.userFind)
         self.child.show()
+
 
     def userFind(self):
         """查找"""
@@ -322,3 +337,4 @@ def red(self,bookTotal):
         bookNumber = int(str)
         if bookNumber == 0:
             cellItem.setForeground(QBrush(QColor(255, 0, 0)))                           # 红色
+
