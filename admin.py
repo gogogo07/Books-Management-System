@@ -32,11 +32,11 @@ class adminBook(QtWidgets.QMainWindow, Ui_adminBook):
     def messageShow(self):
         self.adminBookSumLab.setText("当前图书馆的藏书为： " + str(getBookSum()))
         records = getRecords()
-        self.adminBookLab1.setText(records[0][1] + '于' + records[0][4] + records[0][2] + '一本' + records[0][3] + '。')
-        self.adminBookLab2.setText(records[1][1] + '于' + records[1][4] + records[1][2] + '一本' + records[1][3] + '。')
-        self.adminBookLab3.setText(records[2][1] + '于' + records[2][4] + records[2][2] + '一本' + records[2][3] + '。')
-        self.adminBookLab4.setText(records[3][1] + '于' + records[3][4] + records[3][2] + '一本' + records[3][3] + '。')
-        self.adminBookLab5.setText(records[4][1] + '于' + records[4][4] + records[4][2] + '一本' + records[4][3] + '。')
+        self.adminBookLab1.setText(records[0][1] + '于' + records[0][4] + records[0][2] + '一本《' + records[0][3] + '》。')
+        self.adminBookLab2.setText(records[1][1] + '于' + records[1][4] + records[1][2] + '一本《' + records[1][3] + '》。')
+        self.adminBookLab3.setText(records[2][1] + '于' + records[2][4] + records[2][2] + '一本《' + records[2][3] + '》。')
+        self.adminBookLab4.setText(records[3][1] + '于' + records[3][4] + records[3][2] + '一本《' + records[3][3] + '》。')
+        self.adminBookLab5.setText(records[4][1] + '于' + records[4][4] + records[4][2] + '一本《' + records[4][3] + '》。')
 
 
 def getBookSum():
