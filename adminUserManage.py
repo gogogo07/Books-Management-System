@@ -12,8 +12,22 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_adminUserManageWidget(object):
     def setupUi(self, adminUserManageWidget):
         adminUserManageWidget.setObjectName("adminUserManageWidget")
-        adminUserManageWidget.resize(559, 448)
-        adminUserManageWidget.setStyleSheet("QWidget#customWidget {\n"
+        adminUserManageWidget.resize(523, 448)
+        adminUserManageWidget.setStyleSheet("/*\n"
+"* The MIT License (MIT)\n"
+"*\n"
+"* Copyright : http://blog.csdn.net/liang19890820\n"
+"*\n"
+"* Author : 一去丶二三里\n"
+"*\n"
+"* Date : 2016/07/22\n"
+"*\n"
+"* Description : 白色靓丽\n"
+"*\n"
+"*/\n"
+"\n"
+"/**********子界面背景**********/\n"
+"QWidget#customWidget {\n"
 "        background: rgb(173, 202, 232);\n"
 "}\n"
 "\n"
@@ -251,15 +265,42 @@ class Ui_adminUserManageWidget(object):
 "        border-right: 1px solid rgb(111, 156, 207);\n"
 "        border-bottom: 1px solid rgb(111, 156, 207);\n"
 "}\n"
-"QTableView::item:selected{\n"
-"        background-color:rgb(160, 255, 182);\n"
-"        \n"
+"QTableView::item:selected {\n"
+"        background: rgba(255, 255, 255, 100);\n"
 "}\n"
-"/*QTableView::item:selected:!active {\n"
-"        color: rgb(65, 65, 65);*/\n"
+"QTableView::item:selected:!active {\n"
+"        color: rgb(65, 65, 65);\n"
+"}\n"
 "QTableView::indicator {\n"
 "        width: 20px;\n"
 "        height: 20px;\n"
+"}\n"
+"QTableView::indicator:enabled:unchecked {\n"
+"        image: url(:/White/checkBox);\n"
+"}\n"
+"QTableView::indicator:enabled:unchecked:hover {\n"
+"        image: url(:/White/checkBoxHover);\n"
+"}\n"
+"QTableView::indicator:enabled:unchecked:pressed {\n"
+"        image: url(:/White/checkBoxPressed);\n"
+"}\n"
+"QTableView::indicator:enabled:checked {\n"
+"        image: url(:/White/checkBoxChecked);\n"
+"}\n"
+"QTableView::indicator:enabled:checked:hover {\n"
+"        image: url(:/White/checkBoxCheckedHover);\n"
+"}\n"
+"QTableView::indicator:enabled:checked:pressed {\n"
+"        image: url(:/White/checkBoxCheckedPressed);\n"
+"}\n"
+"QTableView::indicator:enabled:indeterminate {\n"
+"        image: url(:/White/checkBoxIndeterminate);\n"
+"}\n"
+"QTableView::indicator:enabled:indeterminate:hover {\n"
+"        image: url(:/White/checkBoxIndeterminateHover);\n"
+"}\n"
+"QTableView::indicator:enabled:indeterminate:pressed {\n"
+"        image: url(:/White/checkBoxIndeterminatePressed);\n"
 "}\n"
 "\n"
 "/**********滚动条-水平**********/\n"
@@ -369,9 +410,7 @@ class Ui_adminUserManageWidget(object):
 "        background: rgba(255, 255, 255, 30);\n"
 "}\n"
 "QComboBox::down-arrow {\n"
-"        image: url(:/photo/2.png);\n"
-"        /*image: url(:/White/arrowBottom);*/\n"
-"\n"
+"        image: url(:/White/arrowBottom);\n"
 "}\n"
 "QComboBox::down-arrow:on {\n"
 "        /**top: 1px;**/\n"
@@ -930,7 +969,7 @@ class Ui_adminUserManageWidget(object):
 "}\n"
 "")
         self.adminUserBackBtn = QtWidgets.QPushButton(adminUserManageWidget)
-        self.adminUserBackBtn.setGeometry(QtCore.QRect(410, 370, 91, 61))
+        self.adminUserBackBtn.setGeometry(QtCore.QRect(430, 390, 81, 41))
         self.adminUserBackBtn.setObjectName("adminUserBackBtn")
         self.adminUserTable2 = QtWidgets.QTableWidget(adminUserManageWidget)
         self.adminUserTable2.setGeometry(QtCore.QRect(50, 140, 341, 291))
@@ -944,14 +983,14 @@ class Ui_adminUserManageWidget(object):
         item = QtWidgets.QTableWidgetItem()
         self.adminUserTable2.setHorizontalHeaderItem(2, item)
         self.adminUserLineEdit2 = QtWidgets.QLineEdit(adminUserManageWidget)
-        self.adminUserLineEdit2.setGeometry(QtCore.QRect(40, 50, 311, 41))
+        self.adminUserLineEdit2.setGeometry(QtCore.QRect(40, 50, 351, 41))
         self.adminUserLineEdit2.setText("")
         self.adminUserLineEdit2.setObjectName("adminUserLineEdit2")
         self.adminUserFindBtn = QtWidgets.QPushButton(adminUserManageWidget)
-        self.adminUserFindBtn.setGeometry(QtCore.QRect(370, 30, 75, 71))
+        self.adminUserFindBtn.setGeometry(QtCore.QRect(410, 50, 101, 41))
         self.adminUserFindBtn.setObjectName("adminUserFindBtn")
         self.adminUserLab = QtWidgets.QLabel(adminUserManageWidget)
-        self.adminUserLab.setGeometry(QtCore.QRect(180, 100, 171, 41))
+        self.adminUserLab.setGeometry(QtCore.QRect(150, 100, 171, 41))
         self.adminUserLab.setObjectName("adminUserLab")
 
         self.retranslateUi(adminUserManageWidget)

@@ -55,7 +55,7 @@ class myRecord(QtWidgets.QWidget, Ui_myRecord):
         if self.account != None:
             user = self.account
             con, cursor = connect.connection()
-            sql = 'SELECT * FROM users WHERE user_account REGEXP "%s"' % (user)
+            sql = 'SELECT * FROM users WHERE user_account = "%s"' % (user)
             cursor.execute(sql)
             results = cursor.fetchall()
             cursor.close()
@@ -149,7 +149,7 @@ class userWindow(QtWidgets.QWidget, Ui_userWindow):
         if self.account!=None:
             user = self.account
             con, cursor = connect.connection()
-            sql = 'SELECT * FROM users WHERE user_account REGEXP "%s"' % (user)
+            sql = 'SELECT * FROM users WHERE user_account = "%s"' % (user)
             cursor.execute(sql)
             results = cursor.fetchall()
             cursor.close()

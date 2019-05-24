@@ -32,11 +32,11 @@ class adminBook(QtWidgets.QMainWindow, Ui_adminBook):
     def messageShow(self):
         self.adminBookSumLab.setText("当前图书馆的藏书为： " + str(getBookSum()))
         records = getRecords()
-        self.adminBookLab1.setText(records[0][1] + '于' + records[0][4] + records[0][2] + '一本' + records[0][3] + '。')
-        self.adminBookLab2.setText(records[1][1] + '于' + records[1][4] + records[1][2] + '一本' + records[1][3] + '。')
-        self.adminBookLab3.setText(records[2][1] + '于' + records[2][4] + records[2][2] + '一本' + records[2][3] + '。')
-        self.adminBookLab4.setText(records[3][1] + '于' + records[3][4] + records[3][2] + '一本' + records[3][3] + '。')
-        self.adminBookLab5.setText(records[4][1] + '于' + records[4][4] + records[4][2] + '一本' + records[4][3] + '。')
+        self.adminBookLab1.setText(records[0][1] + '于' + records[0][4] + records[0][2] + '一本《' + records[0][3] + '》。')
+        self.adminBookLab2.setText(records[1][1] + '于' + records[1][4] + records[1][2] + '一本《' + records[1][3] + '》。')
+        self.adminBookLab3.setText(records[2][1] + '于' + records[2][4] + records[2][2] + '一本《' + records[2][3] + '》。')
+        self.adminBookLab4.setText(records[3][1] + '于' + records[3][4] + records[3][2] + '一本《' + records[3][3] + '》。')
+        self.adminBookLab5.setText(records[4][1] + '于' + records[4][4] + records[4][2] + '一本《' + records[4][3] + '》。')
 
 
 def getBookSum():
@@ -166,8 +166,6 @@ class adminBookManage(QtWidgets.QMainWindow,Ui_adminBookManage):
     def adminBookFind(self):
         bookkind = self.comboBox.currentText()
         bookdata = self.adminBookFindEdit.text()
-        print(bookkind)
-        print(bookdata)
         results=adminFindFunction(bookdata, bookkind)
         if len(results) == 0:
             # QMessageBox.Warning(self, "", "未找到符合的书籍", QMessageBox.Ok)                 # 结果为0查找失败返回
@@ -305,7 +303,7 @@ def adminFindFunction(bookData=None, bookKind=None):
 def adminUserFindFunction(userData):
     # 用户查询
     con,cursor = connect.connection()
-    sql = 'SELECT * FROM users WHERE user_account REGEXP "%s"' % (userData)
+    sql = 'SELECT * FROM users WHERE user_account = "%s"' % (userData)
     getdata(sql)
     try:
         cursor.execute(sql)
@@ -338,7 +336,7 @@ def getdata(sql):
 
 
 def getuser_inf(user):
-    sql = 'SELECT * FROM users WHERE user_account REGEXP "%s"' % (user)
+    sql = 'SELECT * FROM users WHERE user_account = "%s"' % (user)
     return getdata(sql)
 
 
