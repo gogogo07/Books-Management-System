@@ -1,4 +1,5 @@
 from PyQt5.QtWidgets import *
+from PyQt5.QtGui import *
 from adminUserManage import Ui_adminUserManageWidget
 from adminWindow import Ui_adminWindow
 from adminPutaway import Ui_adminPutaway
@@ -18,6 +19,11 @@ class adminBook(QtWidgets.QMainWindow, Ui_adminBook):
         self.messageShow()
         self.chillBookManWin = adminBookManage()
         self.chillPutawayWin = adminPutaway()
+        self.setWindowIcon(QIcon('main.jpg'))                       # 设置标题图片
+        bg = QtGui.QPalette()  # 初始化界面
+        bg.setBrush(self.backgroundRole(), QtGui.QBrush(QtGui.QPixmap("adminBookBg.jpg")))  # 设置背景图片
+        self.setPalette(bg)
+        self.setWindowTitle("图书管理")
 
     def adminBookBack(self):
         self.hide()
@@ -37,6 +43,11 @@ class adminBook(QtWidgets.QMainWindow, Ui_adminBook):
         self.adminBookLab3.setText(records[2][1] + '于' + records[2][4] + records[2][2] + '一本《' + records[2][3] + '》。')
         self.adminBookLab4.setText(records[3][1] + '于' + records[3][4] + records[3][2] + '一本《' + records[3][3] + '》。')
         self.adminBookLab5.setText(records[4][1] + '于' + records[4][4] + records[4][2] + '一本《' + records[4][3] + '》。')
+        self.adminBookLab1.setFont(QFont("Roman times", 12, QFont.Bold))
+        self.adminBookLab2.setFont(QFont("Roman times", 12, QFont.Bold))
+        self.adminBookLab3.setFont(QFont("Roman times", 12, QFont.Bold))
+        self.adminBookLab4.setFont(QFont("Roman times", 12, QFont.Bold))
+        self.adminBookLab5.setFont(QFont("Roman times", 12, QFont.Bold))
 
 
 def getBookSum():
@@ -69,6 +80,8 @@ class adminPutaway(QtWidgets.QMainWindow,Ui_adminPutaway):
         super(adminPutaway,self).__init__()
         self.setupUi(self)
         self.adminPutawayNameEdit.setFocus()
+        self.setWindowIcon(QIcon('main.jpg'))
+        self.setWindowTitle("上架")
 
     def keyPressEvent(self, event):
         if event.key() == QtCore.Qt.Key_Return or event.key() == QtCore.Qt.Key_Enter:
@@ -143,6 +156,9 @@ class adminBookManage(QtWidgets.QMainWindow,Ui_adminBookManage):
         self.setupUi(self)
         self.adminBookTableWidget.setSelectionBehavior(QAbstractItemView.SelectRows)
         self.adminBookTableWidget.setEditTriggers(QAbstractItemView.NoEditTriggers)
+        self.setWindowIcon(QIcon('main.jpg'))
+        self.adminBookFindBtn.setStyleSheet("QPushButton{border-image: url(Find.jpg)}")
+        self.setWindowTitle("图书管理")
 
 
     def keyPressEvent(self, event):
@@ -199,8 +215,12 @@ class adminWindow(QtWidgets.QMainWindow,Ui_adminWindow):
         self.childWinBook = adminBook()
         self.childWinUser = adminUserManage()
         self.app = QtWidgets.QApplication(sys.argv)
-        # 初始化界面
-        """需要初始加载数据"""
+        bg = QtGui.QPalette()                                            # 初始化界面
+        bg.setBrush(self.backgroundRole(), QtGui.QBrush(QtGui.QPixmap("adminWindowBg.jpg")))        # 设置背景图片
+        self.setPalette(bg)
+        self.setWindowIcon(QIcon('main.jpg'))
+        self.setWindowTitle("管理界面")
+
 
     def adminUserManage(self):
         self.childWinUser.show()  # 显示子页面
@@ -228,6 +248,12 @@ class adminUserManage(QtWidgets.QMainWindow,Ui_adminUserManageWidget):
         self.adminUserTable2.setEditTriggers(QAbstractItemView.NoEditTriggers)       # 设置tablewidget为只读
         self.adminUserTable2.setSelectionBehavior(QAbstractItemView.SelectRows)          # 设置tablewidge为单行选中
         self.adminUserLineEdit2.setFocus()
+        self.setWindowIcon(QIcon('main.jpg'))
+        self.adminUserFindBtn.setStyleSheet("QPushButton{border-image: url(Find.jpg)}")
+        bg = QtGui.QPalette()  # 初始化界面
+        bg.setBrush(self.backgroundRole(), QtGui.QBrush(QtGui.QPixmap("adminUserBg.jpg")))  # 设置背景图片
+        self.setPalette(bg)
+        self.setWindowTitle("用户管理")
 
 
 

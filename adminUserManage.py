@@ -12,7 +12,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_adminUserManageWidget(object):
     def setupUi(self, adminUserManageWidget):
         adminUserManageWidget.setObjectName("adminUserManageWidget")
-        adminUserManageWidget.resize(523, 448)
+        adminUserManageWidget.resize(487, 469)
         adminUserManageWidget.setStyleSheet("/*\n"
 "* The MIT License (MIT)\n"
 "*\n"
@@ -969,10 +969,10 @@ class Ui_adminUserManageWidget(object):
 "}\n"
 "")
         self.adminUserBackBtn = QtWidgets.QPushButton(adminUserManageWidget)
-        self.adminUserBackBtn.setGeometry(QtCore.QRect(430, 390, 81, 41))
+        self.adminUserBackBtn.setGeometry(QtCore.QRect(410, 400, 51, 41))
         self.adminUserBackBtn.setObjectName("adminUserBackBtn")
         self.adminUserTable2 = QtWidgets.QTableWidget(adminUserManageWidget)
-        self.adminUserTable2.setGeometry(QtCore.QRect(50, 140, 341, 291))
+        self.adminUserTable2.setGeometry(QtCore.QRect(50, 140, 341, 301))
         self.adminUserTable2.setObjectName("adminUserTable2")
         self.adminUserTable2.setColumnCount(3)
         self.adminUserTable2.setRowCount(0)
@@ -987,7 +987,8 @@ class Ui_adminUserManageWidget(object):
         self.adminUserLineEdit2.setText("")
         self.adminUserLineEdit2.setObjectName("adminUserLineEdit2")
         self.adminUserFindBtn = QtWidgets.QPushButton(adminUserManageWidget)
-        self.adminUserFindBtn.setGeometry(QtCore.QRect(410, 50, 101, 41))
+        self.adminUserFindBtn.setGeometry(QtCore.QRect(345, 52, 41, 36))
+        self.adminUserFindBtn.setText("")
         self.adminUserFindBtn.setObjectName("adminUserFindBtn")
         self.adminUserLab = QtWidgets.QLabel(adminUserManageWidget)
         self.adminUserLab.setGeometry(QtCore.QRect(150, 100, 171, 41))
@@ -1008,7 +1009,6 @@ class Ui_adminUserManageWidget(object):
         item.setText(_translate("adminUserManageWidget", "借出日期"))
         item = self.adminUserTable2.horizontalHeaderItem(2)
         item.setText(_translate("adminUserManageWidget", "归还日期"))
-        self.adminUserFindBtn.setText(_translate("adminUserManageWidget", "查找"))
         self.adminUserLab.setText(_translate("adminUserManageWidget", "<html><head/><body><p><span style=\" font-size:14pt;\">用户名</span></p></body></html>"))
 
 
