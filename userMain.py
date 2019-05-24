@@ -55,7 +55,7 @@ class myRecord(QtWidgets.QWidget, Ui_myRecord):
         if self.account != None:
             user = self.account
             con, cursor = connect.connection()
-            sql = 'SELECT * FROM users WHERE user_account REGEXP "%s"' % (user)
+            sql = 'SELECT * FROM users WHERE user_account = "%s"' % (user)
             cursor.execute(sql)
             results = cursor.fetchall()
             cursor.close()
@@ -72,10 +72,14 @@ class myRecord(QtWidgets.QWidget, Ui_myRecord):
         if self.account != None:
             con, cursor = connect.connection()                                          # 连接数据库
             curRow = self.recordTableWidget.currentRow()                                # 获取光标所点击的行数
-            cellItem1 = self.recordTableWidget.item(curRow, 0)                          # 获取是否归还信息
-            bookName = cellItem1.text()                                                 # 获取选中图书的信息
-            if curRow < 0 :
-                QMessageBox.warning(self, "警告", "请选择你要归还的图书！", QMessageBox.Yes)
+            cellItem1 = self.recordTableWidget.item(curRow, 0)
+            if cellItem1 != None: # 获取是否归还信息
+                bookName = cellItem1.text()                                                 # 获取选中图书的信息
+            else:
+                QMessageBox.warning(self, "警告","请选择你要归还的图书！", QMessageBox.Yes)
+                return
+            """if curRow < 0 :
+                QMessageBox.warning(self, "警告", "请选择你要归还的图书！", QMessageBox.Yes)"""
             cellItem2 = self.recordTableWidget.item(curRow, 2)                          # 获取是否归还信息
             str2 = cellItem2.text()
             if  str2 != "----":
@@ -105,9 +109,22 @@ class myRecord(QtWidgets.QWidget, Ui_myRecord):
                     except Exception as e:
                         print(e)
                         con.rollback()
-                    finally:
+                    """finally:
                         cursor.close()
+                        con.close()"""
+
+                    """将记录保存到数据库中"""
+                    try:
+                        cursor.execute("INSERT INTO records(user_name, operator, book_name, time) VALUES(%s, %s, %s, %s)",
+                                       (self.user.account, '归还了', bookName, returnTime))
+                        con.commit()
+                        print ("记录保存成功")
+                    except Exception as e:
+                        con.rollback()
+                        print (e)
+                    finally:
                         con.close()
+                        cursor.close()
 
                     QMessageBox().information (self, "成功", "成功归换"+bookName+"图书，欢迎您继续借阅图书", QMessageBox.Ok)
                     self.tableShow()
@@ -130,7 +147,7 @@ class userWindow(QtWidgets.QWidget, Ui_userWindow):
         if self.account!=None:
             user = self.account
             con, cursor = connect.connection()
-            sql = 'SELECT * FROM users WHERE user_account REGEXP "%s"' % (user)
+            sql = 'SELECT * FROM users WHERE user_account = "%s"' % (user)
             cursor.execute(sql)
             results = cursor.fetchall()
             cursor.close()
@@ -194,36 +211,49 @@ class userWindow(QtWidgets.QWidget, Ui_userWindow):
                 return
             cellItem1 = self.userTableWidget.item(curRow, 0)                            # 获取图书名称
             bookName = cellItem1.text()
-            cellItem2 = self.userTableWidget.item(curRow, 4)                            # 获取图书剩余量
-            str1 = cellItem2.text()
-            bookNumber = int(str1)
-            if bookNumber <= 0:
-                QMessageBox.warning(self, "警告", "‘"+bookName+"’已经没有剩余量了！", QMessageBox.Ok)
-            else :
-                """Todo 借阅图书（记录+图书，剩余量-1）"""
-                print(self.user)
-                lendTime = time.strftime("%Y-%m-%d", time.localtime())  # 获取借阅图书的时间
+            print (self.user.lending)
+            if bookName in self.user.lending:
+                QMessageBox.warning(self, "警告", "这本书你已经借了，而且还没有归还，不可重复再借同一本书。", QMessageBox.Yes)
+            else:
+                cellItem2 = self.userTableWidget.item(curRow, 4)                            # 获取图书剩余量
+                str1 = cellItem2.text()
+                bookNumber = int(str1)
+                if bookNumber <= 0:
+                    QMessageBox.warning(self, "警告", "‘"+bookName+"’已经没有剩余量了！", QMessageBox.Ok)
+                else :
+                    """Todo 借阅图书（记录+图书，剩余量-1）"""
+                    lendTime = time.strftime("%Y-%m-%d", time.localtime())  # 获取借阅图书的时间
 
-                self.user.lending.append(bookName)
-                self.user.lending.append(lendTime)
-                lending = str(self.user.lending)
-                try: #借书-用户添加信息
-                    cursor.execute("UPDATE users SET user_lendingnum = user_lendingnum+1, user_lending = %s WHERE user_account = %s",
-                                   (lending, self.account))
-                    cursor.execute("UPDATE books SET book_left = book_left - 1 ,book_lending = book_lending + 1 WHERE book_name = %s",
-                        (bookName))
-                    con.commit()
-                    print("更新成功")
-                except Exception as e:
-                    con.rollback()
-                    print(e)
-                finally:
-                    cursor.close()
-                    con.close()
+                    self.user.lending.append(bookName)
+                    self.user.lending.append(lendTime)
+                    lending = str(self.user.lending)
+                    try: #借书-用户添加信息
+                        cursor.execute("UPDATE users SET user_lendingnum = user_lendingnum+1, user_lending = %s WHERE user_account = %s",
+                                       (lending, self.account))
+                        cursor.execute("UPDATE books SET book_left = book_left - 1 ,book_lending = book_lending + 1 WHERE book_name = %s",
+                            (bookName))
+                        con.commit()
+                    except Exception as e:
+                        con.rollback()
+                        print(e)
 
-                QMessageBox.information(self, "恭喜您", "您已成功借阅‘"+bookName+"’图书", QMessageBox.Ok)
-                self.load()
-                self.userFind()
+                    """保存借阅记录"""
+                    try:
+                        cursor.execute(
+                            "INSERT INTO records(user_name, operator, book_name, time) VALUES(%s, %s, %s, %s)",
+                            (self.user.account, '借阅了', bookName, lendTime))
+                        con.commit()
+                        print("记录保存成功")
+                    except Exception as e:
+                        con.rollback()
+                        print(e)
+                    finally:
+                        con.close()
+                        cursor.close()
+
+                    QMessageBox.information(self, "恭喜您", "您已成功借阅‘"+bookName+"’图书", QMessageBox.Ok)
+                    self.load()
+                    self.userFind()
 
     def userBookRecommend(self):
         """推荐图书"""
@@ -263,7 +293,6 @@ def search(book_name = None, book_author = None, book_kind = None):
         con.close()
         return results
     except:
-        print ('获取失败')
         cursor.close()
         con.close()
         return None
@@ -293,4 +322,3 @@ def red(self,bookTotal):
         bookNumber = int(str)
         if bookNumber == 0:
             cellItem.setForeground(QBrush(QColor(255, 0, 0)))                           # 红色
-

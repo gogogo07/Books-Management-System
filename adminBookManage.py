@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'register.ui'
+# Form implementation generated from reading ui file 'adminbookmanage.ui'
 #
 # Created by: PyQt5 UI code generator 5.12.2
 #
@@ -9,11 +9,11 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-class Ui_registerWidget(object):
-    def setupUi(self, registerWidget):
-        registerWidget.setObjectName("registerWidget")
-        registerWidget.resize(400, 253)
-        registerWidget.setStyleSheet("/*\n"
+class Ui_adminBookManage(object):
+    def setupUi(self, adminBookManage):
+        adminBookManage.setObjectName("adminBookManage")
+        adminBookManage.resize(686, 344)
+        adminBookManage.setStyleSheet("/*\n"
 "* The MIT License (MIT)\n"
 "*\n"
 "* Copyright : http://blog.csdn.net/liang19890820\n"
@@ -968,47 +968,72 @@ class Ui_registerWidget(object):
 "        padding-right: 3px;\n"
 "}\n"
 "")
-        self.label = QtWidgets.QLabel(registerWidget)
-        self.label.setGeometry(QtCore.QRect(60, 50, 71, 21))
-        self.label.setObjectName("label")
-        self.label_2 = QtWidgets.QLabel(registerWidget)
-        self.label_2.setGeometry(QtCore.QRect(60, 90, 81, 21))
-        self.label_2.setObjectName("label_2")
-        self.label_3 = QtWidgets.QLabel(registerWidget)
-        self.label_3.setGeometry(QtCore.QRect(60, 130, 91, 21))
-        self.label_3.setObjectName("label_3")
-        self.lineEdit = QtWidgets.QLineEdit(registerWidget)
-        self.lineEdit.setGeometry(QtCore.QRect(210, 50, 131, 21))
-        self.lineEdit.setObjectName("lineEdit")
-        self.lineEdit_2 = QtWidgets.QLineEdit(registerWidget)
-        self.lineEdit_2.setGeometry(QtCore.QRect(210, 90, 131, 21))
-        self.lineEdit_2.setObjectName("lineEdit_2")
-        self.lineEdit_3 = QtWidgets.QLineEdit(registerWidget)
-        self.lineEdit_3.setGeometry(QtCore.QRect(210, 130, 131, 21))
-        self.lineEdit_3.setObjectName("lineEdit_3")
-        self.pushButton = QtWidgets.QPushButton(registerWidget)
-        self.pushButton.setGeometry(QtCore.QRect(50, 190, 91, 31))
-        self.pushButton.setObjectName("pushButton")
-        self.codeLabel = QtWidgets.QLabel(registerWidget)
-        self.codeLabel.setGeometry(QtCore.QRect(50, 170, 100, 25))
-        self.codeLabel.setText("")
-        self.codeLabel.setObjectName("codeLabel")
-        self.pushButton_2 = QtWidgets.QPushButton(registerWidget)
-        self.pushButton_2.setGeometry(QtCore.QRect(250, 190, 91, 31))
-        self.pushButton_2.setObjectName("pushButton_2")
+        self.adminBookSoldBtn = QtWidgets.QPushButton(adminBookManage)
+        self.adminBookSoldBtn.setGeometry(QtCore.QRect(10, 270, 75, 51))
+        self.adminBookSoldBtn.setObjectName("adminBookSoldBtn")
+        self.adminBookFindBtn = QtWidgets.QPushButton(adminBookManage)
+        self.adminBookFindBtn.setGeometry(QtCore.QRect(450, 10, 75, 23))
+        self.adminBookFindBtn.setObjectName("adminBookFindBtn")
+        self.adminBookFindEdit = QtWidgets.QLineEdit(adminBookManage)
+        self.adminBookFindEdit.setGeometry(QtCore.QRect(10, 10, 291, 31))
+        self.adminBookFindEdit.setObjectName("adminBookFindEdit")
+        self.adminBookBackBtn = QtWidgets.QPushButton(adminBookManage)
+        self.adminBookBackBtn.setGeometry(QtCore.QRect(580, 270, 75, 51))
+        self.adminBookBackBtn.setObjectName("adminBookBackBtn")
+        self.adminBookTableWidget = QtWidgets.QTableWidget(adminBookManage)
+        self.adminBookTableWidget.setGeometry(QtCore.QRect(10, 70, 641, 181))
+        self.adminBookTableWidget.setObjectName("adminBookTableWidget")
+        self.adminBookTableWidget.setColumnCount(6)
+        self.adminBookTableWidget.setRowCount(0)
+        item = QtWidgets.QTableWidgetItem()
+        self.adminBookTableWidget.setHorizontalHeaderItem(0, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.adminBookTableWidget.setHorizontalHeaderItem(1, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.adminBookTableWidget.setHorizontalHeaderItem(2, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.adminBookTableWidget.setHorizontalHeaderItem(3, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.adminBookTableWidget.setHorizontalHeaderItem(4, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.adminBookTableWidget.setHorizontalHeaderItem(5, item)
+        self.comboBox = QtWidgets.QComboBox(adminBookManage)
+        self.comboBox.setGeometry(QtCore.QRect(310, 10, 91, 31))
+        self.comboBox.setObjectName("comboBox")
+        self.comboBox.addItem("")
+        self.comboBox.addItem("")
+        self.comboBox.addItem("")
+        self.comboBox.addItem("")
+        self.comboBox.addItem("")
 
-        self.retranslateUi(registerWidget)
-        self.pushButton.clicked.connect(registerWidget.registerDue)
-        self.pushButton_2.clicked.connect(registerWidget.registerBack)
-        QtCore.QMetaObject.connectSlotsByName(registerWidget)
+        self.retranslateUi(adminBookManage)
+        self.adminBookFindBtn.clicked.connect(adminBookManage.adminBookFind)
+        self.adminBookSoldBtn.clicked.connect(adminBookManage.adminBookSold)
+        self.adminBookBackBtn.clicked.connect(adminBookManage.adminBookManageBack)
+        QtCore.QMetaObject.connectSlotsByName(adminBookManage)
 
-    def retranslateUi(self, registerWidget):
+    def retranslateUi(self, adminBookManage):
         _translate = QtCore.QCoreApplication.translate
-        registerWidget.setWindowTitle(_translate("registerWidget", "Form"))
-        self.label.setText(_translate("registerWidget", "请输入账号"))
-        self.label_2.setText(_translate("registerWidget", "请输入密码"))
-        self.label_3.setText(_translate("registerWidget", "请再次输入密码"))
-        self.pushButton.setText(_translate("registerWidget", "注册"))
-        self.pushButton_2.setText(_translate("registerWidget", "返回"))
+        adminBookManage.setWindowTitle(_translate("adminBookManage", "Form"))
+        self.adminBookSoldBtn.setText(_translate("adminBookManage", "下架"))
+        self.adminBookFindBtn.setText(_translate("adminBookManage", "查询"))
+        self.adminBookBackBtn.setText(_translate("adminBookManage", "返回"))
+        item = self.adminBookTableWidget.horizontalHeaderItem(0)
+        item.setText(_translate("adminBookManage", "书名"))
+        item = self.adminBookTableWidget.horizontalHeaderItem(1)
+        item.setText(_translate("adminBookManage", "作者"))
+        item = self.adminBookTableWidget.horizontalHeaderItem(2)
+        item.setText(_translate("adminBookManage", "种类"))
+        item = self.adminBookTableWidget.horizontalHeaderItem(3)
+        item.setText(_translate("adminBookManage", "序列号"))
+        item = self.adminBookTableWidget.horizontalHeaderItem(4)
+        item.setText(_translate("adminBookManage", "剩余"))
+        item = self.adminBookTableWidget.horizontalHeaderItem(5)
+        item.setText(_translate("adminBookManage", "已借"))
+        self.comboBox.setItemText(0, _translate("adminBookManage", "全部"))
+        self.comboBox.setItemText(1, _translate("adminBookManage", "编号"))
+        self.comboBox.setItemText(2, _translate("adminBookManage", "书名"))
+        self.comboBox.setItemText(3, _translate("adminBookManage", "种类"))
+        self.comboBox.setItemText(4, _translate("adminBookManage", "作者"))
 
 

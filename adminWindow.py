@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'register.ui'
+# Form implementation generated from reading ui file 'mainwindow.ui'
 #
 # Created by: PyQt5 UI code generator 5.12.2
 #
@@ -9,11 +9,11 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-class Ui_registerWidget(object):
-    def setupUi(self, registerWidget):
-        registerWidget.setObjectName("registerWidget")
-        registerWidget.resize(400, 253)
-        registerWidget.setStyleSheet("/*\n"
+class Ui_adminWindow(object):
+    def setupUi(self, adminWindow):
+        adminWindow.setObjectName("adminWindow")
+        adminWindow.resize(400, 300)
+        adminWindow.setStyleSheet("/*\n"
 "* The MIT License (MIT)\n"
 "*\n"
 "* Copyright : http://blog.csdn.net/liang19890820\n"
@@ -968,47 +968,45 @@ class Ui_registerWidget(object):
 "        padding-right: 3px;\n"
 "}\n"
 "")
-        self.label = QtWidgets.QLabel(registerWidget)
-        self.label.setGeometry(QtCore.QRect(60, 50, 71, 21))
+        self.centralWidget = QtWidgets.QWidget(adminWindow)
+        self.centralWidget.setMouseTracking(False)
+        self.centralWidget.setObjectName("centralWidget")
+        self.adminUserManageBtn = QtWidgets.QPushButton(self.centralWidget)
+        self.adminUserManageBtn.setGeometry(QtCore.QRect(40, 110, 81, 61))
+        self.adminUserManageBtn.setObjectName("adminUserManageBtn")
+        self.admin = QtWidgets.QPushButton(self.centralWidget)
+        self.admin.setGeometry(QtCore.QRect(160, 110, 81, 61))
+        self.admin.setObjectName("admin")
+        self.adminQuitBtn = QtWidgets.QPushButton(self.centralWidget)
+        self.adminQuitBtn.setGeometry(QtCore.QRect(280, 110, 81, 61))
+        self.adminQuitBtn.setObjectName("adminQuitBtn")
+        self.label = QtWidgets.QLabel(self.centralWidget)
+        self.label.setGeometry(QtCore.QRect(93, 31, 221, 41))
         self.label.setObjectName("label")
-        self.label_2 = QtWidgets.QLabel(registerWidget)
-        self.label_2.setGeometry(QtCore.QRect(60, 90, 81, 21))
-        self.label_2.setObjectName("label_2")
-        self.label_3 = QtWidgets.QLabel(registerWidget)
-        self.label_3.setGeometry(QtCore.QRect(60, 130, 91, 21))
-        self.label_3.setObjectName("label_3")
-        self.lineEdit = QtWidgets.QLineEdit(registerWidget)
-        self.lineEdit.setGeometry(QtCore.QRect(210, 50, 131, 21))
-        self.lineEdit.setObjectName("lineEdit")
-        self.lineEdit_2 = QtWidgets.QLineEdit(registerWidget)
-        self.lineEdit_2.setGeometry(QtCore.QRect(210, 90, 131, 21))
-        self.lineEdit_2.setObjectName("lineEdit_2")
-        self.lineEdit_3 = QtWidgets.QLineEdit(registerWidget)
-        self.lineEdit_3.setGeometry(QtCore.QRect(210, 130, 131, 21))
-        self.lineEdit_3.setObjectName("lineEdit_3")
-        self.pushButton = QtWidgets.QPushButton(registerWidget)
-        self.pushButton.setGeometry(QtCore.QRect(50, 190, 91, 31))
-        self.pushButton.setObjectName("pushButton")
-        self.codeLabel = QtWidgets.QLabel(registerWidget)
-        self.codeLabel.setGeometry(QtCore.QRect(50, 170, 100, 25))
-        self.codeLabel.setText("")
-        self.codeLabel.setObjectName("codeLabel")
-        self.pushButton_2 = QtWidgets.QPushButton(registerWidget)
-        self.pushButton_2.setGeometry(QtCore.QRect(250, 190, 91, 31))
-        self.pushButton_2.setObjectName("pushButton_2")
+        adminWindow.setCentralWidget(self.centralWidget)
+        self.menuBar = QtWidgets.QMenuBar(adminWindow)
+        self.menuBar.setGeometry(QtCore.QRect(0, 0, 400, 30))
+        self.menuBar.setObjectName("menuBar")
+        adminWindow.setMenuBar(self.menuBar)
+        self.mainToolBar = QtWidgets.QToolBar(adminWindow)
+        self.mainToolBar.setObjectName("mainToolBar")
+        adminWindow.addToolBar(QtCore.Qt.TopToolBarArea, self.mainToolBar)
+        self.statusBar = QtWidgets.QStatusBar(adminWindow)
+        self.statusBar.setObjectName("statusBar")
+        adminWindow.setStatusBar(self.statusBar)
 
-        self.retranslateUi(registerWidget)
-        self.pushButton.clicked.connect(registerWidget.registerDue)
-        self.pushButton_2.clicked.connect(registerWidget.registerBack)
-        QtCore.QMetaObject.connectSlotsByName(registerWidget)
+        self.retranslateUi(adminWindow)
+        self.adminUserManageBtn.clicked.connect(adminWindow.adminUserManage)
+        self.admin.clicked.connect(adminWindow.adminBookManage)
+        self.adminQuitBtn.clicked.connect(adminWindow.adminQuit)
+        QtCore.QMetaObject.connectSlotsByName(adminWindow)
 
-    def retranslateUi(self, registerWidget):
+    def retranslateUi(self, adminWindow):
         _translate = QtCore.QCoreApplication.translate
-        registerWidget.setWindowTitle(_translate("registerWidget", "Form"))
-        self.label.setText(_translate("registerWidget", "请输入账号"))
-        self.label_2.setText(_translate("registerWidget", "请输入密码"))
-        self.label_3.setText(_translate("registerWidget", "请再次输入密码"))
-        self.pushButton.setText(_translate("registerWidget", "注册"))
-        self.pushButton_2.setText(_translate("registerWidget", "返回"))
+        adminWindow.setWindowTitle(_translate("adminWindow", "MainWindow"))
+        self.adminUserManageBtn.setText(_translate("adminWindow", "用户管理"))
+        self.admin.setText(_translate("adminWindow", "图书管理"))
+        self.adminQuitBtn.setText(_translate("adminWindow", "退出"))
+        self.label.setText(_translate("adminWindow", "<html><head/><body><p align=\"center\"><span style=\" font-size:14pt; font-weight:600;\">图书管理系统</span></p><p align=\"center\"><span style=\" font-size:14pt;\"><br/></span></p></body></html>"))
 
 

@@ -7,31 +7,37 @@ from PyQt5.QtWidgets import QMessageBox, QLineEdit
 import sys
 import connect
 import userMain
+from admin import *
 
 
 class Login(QtWidgets.QMainWindow, Ui_loginWidgrt):
     def __init__(self):
         super(Login,self).__init__()
         self.setupUi(self)
-        self.lineEdit_2.setEchoMode(QLineEdit.Password)
+        self.lineEdit_2.setEchoMode(QLineEdit.Password)         # 设置密码黑点遮挡
+        self.lineEdit.setFocus()                        # 设置焦点
+
+    def keyPressEvent(self, event):
+        if event.key() == QtCore.Qt.Key_Return or event.key() == QtCore.Qt.Key_Enter:
+            self.login()
 
 
     def login(self):
         tempAccount=self.lineEdit.text()
         tempPassword=self.lineEdit_2.text()
         res = get_user(tempAccount)
-        if tempPassword == res[0][2]:
-            userWindow.account = tempAccount
-            userWindow.load()
-            userWindow.show()
+        if tempAccount == 'admin' and tempPassword == 'admin123':
+            adminWindowT.show()
             self.close()
+        elif len(res) != 0:
+            if tempPassword == res[0][2]:
+                userWindow.account = tempAccount
+                userWindow.load()
+                userWindow.show()
+                self.close()
         else:
             QMessageBox.warning(self, "错误", "密码错误，请重新输入", QMessageBox.Ok)
             self.lineEdit_2.clear()
-
-
-
-
 
 
     def register123(self):
@@ -48,6 +54,7 @@ class Register(QtWidgets.QMainWindow, Ui_registerWidget):
         self.lineEdit_3.setPlaceholderText("请重新输入密码")
         self.lineEdit_2.setEchoMode(QLineEdit.Password)
         self.lineEdit_3.setEchoMode(QLineEdit.Password)
+        self.lineEdit.setFocus()
 
     def registerDue(self):
         tempAccout = self.lineEdit.text()
@@ -57,26 +64,43 @@ class Register(QtWidgets.QMainWindow, Ui_registerWidget):
         if len(get_user(tempAccout)) != 0:
             QMessageBox.warning(self, "错误", "账号已注册", QMessageBox.Ok)
             self.lineEdit.clear()
+            self.lineEdit_2.clear()
+            self.lineEdit_3.clear()
         elif len(tempAccout) > 12:
             QMessageBox.warning(self, "错误", "账号长度太长", QMessageBox.Ok)
             self.lineEdit.clear()
+            self.lineEdit_2.clear()
+            self.lineEdit_3.clear()
         elif len(tempAccout) < 8:
             QMessageBox.warning(self, "错误", "账号长度太短", QMessageBox.Ok)
             self.lineEdit.clear()
+            self.lineEdit_2.clear()
+            self.lineEdit_3.clear()
         elif len(tempPassword) >12:
             QMessageBox.warning(self, "错误", "密码长度太长", QMessageBox.Ok)
             self.lineEdit_2.clear()
+            self.lineEdit_3.clear()
         elif len(tempPassword) < 8:
             QMessageBox.warning(self, "错误", "账号长度太短", QMessageBox.Ok)
             self.lineEdit_2.clear()
+            self.lineEdit_3.clear()
         elif tempPassword != tempPassword2:
             QMessageBox.warning(self, "错误", "两次输入的密码不匹配", QMessageBox.Ok)
+            self.lineEdit_2.clear()
+            self.lineEdit_3.clear()
         else:
             print("注册成功")
             QMessageBox.warning(self, "恭喜", "注册成功", QMessageBox.Ok)
             add_account(tempAccout, tempPassword)
             self.hide()
             log.show()
+
+    def registerBack(self):
+        self.hide()
+        log.show()
+        self.lineEdit.clear()
+        self.lineEdit_2.clear()
+        self.lineEdit_3.clear()
 
 
 
@@ -100,11 +124,9 @@ def add_account(*mes):
         print ('添加成功')
     except Exception as e:
         con.rollback()
-        print (e)
     finally:
         cursor.close()
         con.close()
-
 
 
 if __name__ == '__main__':
@@ -112,6 +134,7 @@ if __name__ == '__main__':
     log = Login()
     res = Register()
     userWindow = userMain.userWindow()
+    adminWindowT = adminWindow()
     myRecord = userMain.myRecord()
     log.show()
 

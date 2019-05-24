@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'register.ui'
+# Form implementation generated from reading ui file 'admin_user_manage.ui'
 #
 # Created by: PyQt5 UI code generator 5.12.2
 #
@@ -9,11 +9,11 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-class Ui_registerWidget(object):
-    def setupUi(self, registerWidget):
-        registerWidget.setObjectName("registerWidget")
-        registerWidget.resize(400, 253)
-        registerWidget.setStyleSheet("/*\n"
+class Ui_adminUserManageWidget(object):
+    def setupUi(self, adminUserManageWidget):
+        adminUserManageWidget.setObjectName("adminUserManageWidget")
+        adminUserManageWidget.resize(523, 448)
+        adminUserManageWidget.setStyleSheet("/*\n"
 "* The MIT License (MIT)\n"
 "*\n"
 "* Copyright : http://blog.csdn.net/liang19890820\n"
@@ -968,47 +968,47 @@ class Ui_registerWidget(object):
 "        padding-right: 3px;\n"
 "}\n"
 "")
-        self.label = QtWidgets.QLabel(registerWidget)
-        self.label.setGeometry(QtCore.QRect(60, 50, 71, 21))
-        self.label.setObjectName("label")
-        self.label_2 = QtWidgets.QLabel(registerWidget)
-        self.label_2.setGeometry(QtCore.QRect(60, 90, 81, 21))
-        self.label_2.setObjectName("label_2")
-        self.label_3 = QtWidgets.QLabel(registerWidget)
-        self.label_3.setGeometry(QtCore.QRect(60, 130, 91, 21))
-        self.label_3.setObjectName("label_3")
-        self.lineEdit = QtWidgets.QLineEdit(registerWidget)
-        self.lineEdit.setGeometry(QtCore.QRect(210, 50, 131, 21))
-        self.lineEdit.setObjectName("lineEdit")
-        self.lineEdit_2 = QtWidgets.QLineEdit(registerWidget)
-        self.lineEdit_2.setGeometry(QtCore.QRect(210, 90, 131, 21))
-        self.lineEdit_2.setObjectName("lineEdit_2")
-        self.lineEdit_3 = QtWidgets.QLineEdit(registerWidget)
-        self.lineEdit_3.setGeometry(QtCore.QRect(210, 130, 131, 21))
-        self.lineEdit_3.setObjectName("lineEdit_3")
-        self.pushButton = QtWidgets.QPushButton(registerWidget)
-        self.pushButton.setGeometry(QtCore.QRect(50, 190, 91, 31))
-        self.pushButton.setObjectName("pushButton")
-        self.codeLabel = QtWidgets.QLabel(registerWidget)
-        self.codeLabel.setGeometry(QtCore.QRect(50, 170, 100, 25))
-        self.codeLabel.setText("")
-        self.codeLabel.setObjectName("codeLabel")
-        self.pushButton_2 = QtWidgets.QPushButton(registerWidget)
-        self.pushButton_2.setGeometry(QtCore.QRect(250, 190, 91, 31))
-        self.pushButton_2.setObjectName("pushButton_2")
+        self.adminUserBackBtn = QtWidgets.QPushButton(adminUserManageWidget)
+        self.adminUserBackBtn.setGeometry(QtCore.QRect(430, 390, 81, 41))
+        self.adminUserBackBtn.setObjectName("adminUserBackBtn")
+        self.adminUserTable2 = QtWidgets.QTableWidget(adminUserManageWidget)
+        self.adminUserTable2.setGeometry(QtCore.QRect(50, 140, 341, 291))
+        self.adminUserTable2.setObjectName("adminUserTable2")
+        self.adminUserTable2.setColumnCount(3)
+        self.adminUserTable2.setRowCount(0)
+        item = QtWidgets.QTableWidgetItem()
+        self.adminUserTable2.setHorizontalHeaderItem(0, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.adminUserTable2.setHorizontalHeaderItem(1, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.adminUserTable2.setHorizontalHeaderItem(2, item)
+        self.adminUserLineEdit2 = QtWidgets.QLineEdit(adminUserManageWidget)
+        self.adminUserLineEdit2.setGeometry(QtCore.QRect(40, 50, 351, 41))
+        self.adminUserLineEdit2.setText("")
+        self.adminUserLineEdit2.setObjectName("adminUserLineEdit2")
+        self.adminUserFindBtn = QtWidgets.QPushButton(adminUserManageWidget)
+        self.adminUserFindBtn.setGeometry(QtCore.QRect(410, 50, 101, 41))
+        self.adminUserFindBtn.setObjectName("adminUserFindBtn")
+        self.adminUserLab = QtWidgets.QLabel(adminUserManageWidget)
+        self.adminUserLab.setGeometry(QtCore.QRect(150, 100, 171, 41))
+        self.adminUserLab.setObjectName("adminUserLab")
 
-        self.retranslateUi(registerWidget)
-        self.pushButton.clicked.connect(registerWidget.registerDue)
-        self.pushButton_2.clicked.connect(registerWidget.registerBack)
-        QtCore.QMetaObject.connectSlotsByName(registerWidget)
+        self.retranslateUi(adminUserManageWidget)
+        self.adminUserBackBtn.clicked.connect(adminUserManageWidget.adminUserBack)
+        self.adminUserFindBtn.clicked.connect(adminUserManageWidget.adminUserFind)
+        QtCore.QMetaObject.connectSlotsByName(adminUserManageWidget)
 
-    def retranslateUi(self, registerWidget):
+    def retranslateUi(self, adminUserManageWidget):
         _translate = QtCore.QCoreApplication.translate
-        registerWidget.setWindowTitle(_translate("registerWidget", "Form"))
-        self.label.setText(_translate("registerWidget", "请输入账号"))
-        self.label_2.setText(_translate("registerWidget", "请输入密码"))
-        self.label_3.setText(_translate("registerWidget", "请再次输入密码"))
-        self.pushButton.setText(_translate("registerWidget", "注册"))
-        self.pushButton_2.setText(_translate("registerWidget", "返回"))
+        adminUserManageWidget.setWindowTitle(_translate("adminUserManageWidget", "Form"))
+        self.adminUserBackBtn.setText(_translate("adminUserManageWidget", "返回"))
+        item = self.adminUserTable2.horizontalHeaderItem(0)
+        item.setText(_translate("adminUserManageWidget", "书籍"))
+        item = self.adminUserTable2.horizontalHeaderItem(1)
+        item.setText(_translate("adminUserManageWidget", "借出日期"))
+        item = self.adminUserTable2.horizontalHeaderItem(2)
+        item.setText(_translate("adminUserManageWidget", "归还日期"))
+        self.adminUserFindBtn.setText(_translate("adminUserManageWidget", "查找"))
+        self.adminUserLab.setText(_translate("adminUserManageWidget", "<html><head/><body><p><span style=\" font-size:14pt;\">用户名</span></p></body></html>"))
 
 

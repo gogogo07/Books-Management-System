@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'register.ui'
+# Form implementation generated from reading ui file 'adminbookmanag.ui'
 #
 # Created by: PyQt5 UI code generator 5.12.2
 #
@@ -9,11 +9,11 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-class Ui_registerWidget(object):
-    def setupUi(self, registerWidget):
-        registerWidget.setObjectName("registerWidget")
-        registerWidget.resize(400, 253)
-        registerWidget.setStyleSheet("/*\n"
+class Ui_adminBook(object):
+    def setupUi(self, adminBook):
+        adminBook.setObjectName("adminBook")
+        adminBook.resize(631, 394)
+        adminBook.setStyleSheet("/*\n"
 "* The MIT License (MIT)\n"
 "*\n"
 "* Copyright : http://blog.csdn.net/liang19890820\n"
@@ -968,47 +968,56 @@ class Ui_registerWidget(object):
 "        padding-right: 3px;\n"
 "}\n"
 "")
-        self.label = QtWidgets.QLabel(registerWidget)
-        self.label.setGeometry(QtCore.QRect(60, 50, 71, 21))
-        self.label.setObjectName("label")
-        self.label_2 = QtWidgets.QLabel(registerWidget)
-        self.label_2.setGeometry(QtCore.QRect(60, 90, 81, 21))
-        self.label_2.setObjectName("label_2")
-        self.label_3 = QtWidgets.QLabel(registerWidget)
-        self.label_3.setGeometry(QtCore.QRect(60, 130, 91, 21))
-        self.label_3.setObjectName("label_3")
-        self.lineEdit = QtWidgets.QLineEdit(registerWidget)
-        self.lineEdit.setGeometry(QtCore.QRect(210, 50, 131, 21))
-        self.lineEdit.setObjectName("lineEdit")
-        self.lineEdit_2 = QtWidgets.QLineEdit(registerWidget)
-        self.lineEdit_2.setGeometry(QtCore.QRect(210, 90, 131, 21))
-        self.lineEdit_2.setObjectName("lineEdit_2")
-        self.lineEdit_3 = QtWidgets.QLineEdit(registerWidget)
-        self.lineEdit_3.setGeometry(QtCore.QRect(210, 130, 131, 21))
-        self.lineEdit_3.setObjectName("lineEdit_3")
-        self.pushButton = QtWidgets.QPushButton(registerWidget)
-        self.pushButton.setGeometry(QtCore.QRect(50, 190, 91, 31))
-        self.pushButton.setObjectName("pushButton")
-        self.codeLabel = QtWidgets.QLabel(registerWidget)
-        self.codeLabel.setGeometry(QtCore.QRect(50, 170, 100, 25))
-        self.codeLabel.setText("")
-        self.codeLabel.setObjectName("codeLabel")
-        self.pushButton_2 = QtWidgets.QPushButton(registerWidget)
-        self.pushButton_2.setGeometry(QtCore.QRect(250, 190, 91, 31))
-        self.pushButton_2.setObjectName("pushButton_2")
+        self.adminBookPutawBtn = QtWidgets.QPushButton(adminBook)
+        self.adminBookPutawBtn.setGeometry(QtCore.QRect(510, 190, 75, 51))
+        self.adminBookPutawBtn.setObjectName("adminBookPutawBtn")
+        self.adminBookManageBtn = QtWidgets.QPushButton(adminBook)
+        self.adminBookManageBtn.setGeometry(QtCore.QRect(510, 80, 75, 51))
+        self.adminBookManageBtn.setObjectName("adminBookManageBtn")
+        self.pushButton_3 = QtWidgets.QPushButton(adminBook)
+        self.pushButton_3.setGeometry(QtCore.QRect(510, 300, 75, 51))
+        self.pushButton_3.setObjectName("pushButton_3")
+        self.adminBookLab4 = QtWidgets.QLabel(adminBook)
+        self.adminBookLab4.setGeometry(QtCore.QRect(60, 270, 391, 31))
+        self.adminBookLab4.setObjectName("adminBookLab4")
+        self.adminBookLab3 = QtWidgets.QLabel(adminBook)
+        self.adminBookLab3.setGeometry(QtCore.QRect(60, 210, 381, 31))
+        self.adminBookLab3.setObjectName("adminBookLab3")
+        self.adminBookLab2 = QtWidgets.QLabel(adminBook)
+        self.adminBookLab2.setGeometry(QtCore.QRect(60, 150, 401, 31))
+        self.adminBookLab2.setObjectName("adminBookLab2")
+        self.adminBookLab1 = QtWidgets.QLabel(adminBook)
+        self.adminBookLab1.setGeometry(QtCore.QRect(60, 90, 391, 31))
+        self.adminBookLab1.setObjectName("adminBookLab1")
+        self.adminBookSumLab = QtWidgets.QLabel(adminBook)
+        self.adminBookSumLab.setGeometry(QtCore.QRect(20, 20, 241, 31))
+        self.adminBookSumLab.setObjectName("adminBookSumLab")
+        self.adminBookLab5 = QtWidgets.QLabel(adminBook)
+        self.adminBookLab5.setGeometry(QtCore.QRect(60, 330, 391, 31))
+        self.adminBookLab5.setObjectName("adminBookLab5")
+        self.line = QtWidgets.QFrame(adminBook)
+        self.line.setGeometry(QtCore.QRect(470, 0, 20, 411))
+        self.line.setFrameShape(QtWidgets.QFrame.VLine)
+        self.line.setFrameShadow(QtWidgets.QFrame.Sunken)
+        self.line.setObjectName("line")
 
-        self.retranslateUi(registerWidget)
-        self.pushButton.clicked.connect(registerWidget.registerDue)
-        self.pushButton_2.clicked.connect(registerWidget.registerBack)
-        QtCore.QMetaObject.connectSlotsByName(registerWidget)
+        self.retranslateUi(adminBook)
+        self.adminBookManageBtn.clicked.connect(adminBook.adminBookManage)
+        self.adminBookPutawBtn.clicked.connect(adminBook.adminBookPutaway)
+        self.pushButton_3.clicked.connect(adminBook.adminBookBack)
+        QtCore.QMetaObject.connectSlotsByName(adminBook)
 
-    def retranslateUi(self, registerWidget):
+    def retranslateUi(self, adminBook):
         _translate = QtCore.QCoreApplication.translate
-        registerWidget.setWindowTitle(_translate("registerWidget", "Form"))
-        self.label.setText(_translate("registerWidget", "请输入账号"))
-        self.label_2.setText(_translate("registerWidget", "请输入密码"))
-        self.label_3.setText(_translate("registerWidget", "请再次输入密码"))
-        self.pushButton.setText(_translate("registerWidget", "注册"))
-        self.pushButton_2.setText(_translate("registerWidget", "返回"))
+        adminBook.setWindowTitle(_translate("adminBook", "Form"))
+        self.adminBookPutawBtn.setText(_translate("adminBook", "图书上架"))
+        self.adminBookManageBtn.setText(_translate("adminBook", "图书查询"))
+        self.pushButton_3.setText(_translate("adminBook", "返回"))
+        self.adminBookLab4.setText(_translate("adminBook", "信息"))
+        self.adminBookLab3.setText(_translate("adminBook", "信息"))
+        self.adminBookLab2.setText(_translate("adminBook", "信息"))
+        self.adminBookLab1.setText(_translate("adminBook", "信息"))
+        self.adminBookSumLab.setText(_translate("adminBook", "书籍总量"))
+        self.adminBookLab5.setText(_translate("adminBook", "信息"))
 
 
