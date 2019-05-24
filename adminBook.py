@@ -1002,7 +1002,7 @@ class Ui_adminBook(object):
         self.line.setObjectName("line")
 
         self.retranslateUi(adminBook)
-        self.adminBookManageBtn.clicked.connect(adminBook.adminBookManagae)
+        self.adminBookManageBtn.clicked.connect(adminBook.adminBookManage)
         self.adminBookPutawBtn.clicked.connect(adminBook.adminBookPutaway)
         self.pushButton_3.clicked.connect(adminBook.adminBookBack)
         QtCore.QMetaObject.connectSlotsByName(adminBook)

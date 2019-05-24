@@ -166,8 +166,6 @@ class adminBookManage(QtWidgets.QMainWindow,Ui_adminBookManage):
     def adminBookFind(self):
         bookkind = self.comboBox.currentText()
         bookdata = self.adminBookFindEdit.text()
-        print(bookkind)
-        print(bookdata)
         results=adminFindFunction(bookdata, bookkind)
         if len(results) == 0:
             # QMessageBox.Warning(self, "", "未找到符合的书籍", QMessageBox.Ok)                 # 结果为0查找失败返回
