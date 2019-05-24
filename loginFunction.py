@@ -40,10 +40,6 @@ class Login(QtWidgets.QMainWindow, Ui_loginWidgrt):
             self.lineEdit_2.clear()
 
 
-
-
-
-
     def register123(self):
         self.hide()
         res.show()

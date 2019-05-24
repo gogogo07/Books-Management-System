@@ -305,7 +305,7 @@ def adminFindFunction(bookData=None, bookKind=None):
 def adminUserFindFunction(userData):
     # 用户查询
     con,cursor = connect.connection()
-    sql = 'SELECT * FROM users WHERE user_account REGEXP "%s"' % (userData)
+    sql = 'SELECT * FROM users WHERE user_account = "%s"' % (userData)
     getdata(sql)
     try:
         cursor.execute(sql)
@@ -338,7 +338,7 @@ def getdata(sql):
 
 
 def getuser_inf(user):
-    sql = 'SELECT * FROM users WHERE user_account REGEXP "%s"' % (user)
+    sql = 'SELECT * FROM users WHERE user_account = "%s"' % (user)
     return getdata(sql)
 
 
