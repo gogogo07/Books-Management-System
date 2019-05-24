@@ -584,7 +584,11 @@ class Ui_userWindow(object):
 "}\n"
 "\n"
 "/**********标签**********/\n"
-"QLabel#grayLabel {\n"
+"QLabel{\n"
+"        \n"
+"    font: italic 12pt \"Harlow Solid Italic\";\n"
+"}\n"
+"/*QLabel#grayLabel {\n"
 "        color: rgb(70, 71, 73);\n"
 "}\n"
 "\n"
@@ -663,7 +667,7 @@ class Ui_userWindow(object):
 "        border-right-color: transparent;\n"
 "        border-left-color: transparent;\n"
 "}\n"
-"\n"
+"*/\n"
 "/**********按钮**********/\n"
 "QToolButton#nsccButton {\n"
 "        border: none;\n"
@@ -980,6 +984,10 @@ class Ui_userWindow(object):
         self.userFindBtn.setGeometry(QtCore.QRect(640, 70, 101, 41))
         self.userFindBtn.setStyleSheet("")
         self.userFindBtn.setObjectName("userFindBtn")
+        self.userLabel = QtWidgets.QLabel(userWindow)
+        self.userLabel.setGeometry(QtCore.QRect(270, 20, 521, 41))
+        self.userLabel.setText("")
+        self.userLabel.setObjectName("userLabel")
 
         self.retranslateUi(userWindow)
         self.userRecordBtn.clicked.connect(userWindow.userMyRecord)
