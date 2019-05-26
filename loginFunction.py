@@ -105,6 +105,10 @@ class Register(QtWidgets.QMainWindow, Ui_registerWidget):
             self.hide()
             log.show()
 
+    def keyPressEvent(self, event):
+        if event.key() == QtCore.Qt.Key_Return or event.key() == QtCore.Qt.Key_Enter:
+            self.registerDue()
+
     def registerBack(self):
         self.hide()
         log.show()
