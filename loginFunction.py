@@ -34,6 +34,12 @@ class Login(QtWidgets.QMainWindow, Ui_loginWidgrt):
         if tempAccount == 'admin' and tempPassword == 'admin123':
             adminWindowT.show()
             self.close()
+        elif tempAccount == '':
+            QMessageBox.warning(self, "错误", "请输入账号", QMessageBox.Yes)
+            return
+        elif tempPassword == '':
+            QMessageBox.warning(self, "错误", "请输入密码", QMessageBox.Yes)
+            return
         elif len(res) != 0:
             if tempPassword == res[0][2]:
                 userWindow.account = tempAccount
@@ -41,7 +47,7 @@ class Login(QtWidgets.QMainWindow, Ui_loginWidgrt):
                 userWindow.show()
                 self.close()
         else:
-            QMessageBox.warning(self, "错误", "密码错误，请重新输入", QMessageBox.Ok)
+            QMessageBox.warning(self, "错误", "密码错误，请重新输入", QMessageBox.Yes)
             self.lineEdit_2.clear()
 
 
