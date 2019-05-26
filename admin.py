@@ -134,11 +134,9 @@ class adminPutaway(QtWidgets.QMainWindow,Ui_adminPutaway):
                 try:
                     cursor.execute(sql)
                     con.commit()
-                    print("更新成功")
                     QMessageBox.warning(self, "", "书籍上架成功", QMessageBox.Ok)
                 except Exception as e:
                     con.rollback()
-                    print(e)
                 finally:
                     cursor.close()
                     con.close()
@@ -288,7 +286,6 @@ class adminUserManage(QtWidgets.QMainWindow,Ui_adminUserManageWidget):
     def adminUserFind(self):
         tempusername=self.adminUserLineEdit2.text()             # 获取用户xing
         results = adminUserFindFunction(tempusername)
-        print (results)
         if len(results) != 0:
             lending = eval(results[0][4])
             history = eval(results[0][5])
@@ -359,7 +356,6 @@ def getdata(sql):
         results = cursor.fetchall()
         cursor.close()
         con.close()
-        print (results)
         return results
     except:
         print ('获取失败')
@@ -390,9 +386,7 @@ def deleteBooks(bookName):
 
 def red(self, bookTotal):
     """将剩余量为0的标红"""
-    print("red")
     for curRow in range(bookTotal):
-        print(curRow)
         cellItem = self.userTableWidget.item(curRow, 4)
         str = cellItem.text()
         bookNumber = int(str)
@@ -451,3 +445,4 @@ if __name__ ==  '__main__':
     adminWindowT.show()
     adminBookT=adminBook()
     sys.exit(app.exec())
+    print ()
