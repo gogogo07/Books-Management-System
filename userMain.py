@@ -14,7 +14,7 @@ import os
 
 
 class myRecord(QtWidgets.QWidget, Ui_myRecord):
-    ret =pyqtSignal()
+    ret = pyqtSignal()
     def __init__(self):
         super(myRecord, self).__init__()
         self.account = None
