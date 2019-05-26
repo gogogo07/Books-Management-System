@@ -18,6 +18,9 @@ class Login(QtWidgets.QMainWindow, Ui_loginWidgrt):
         self.lineEdit.setFocus()                        # 设置焦点
         self.setWindowTitle("登陆")
         self.setWindowIcon(QIcon('main.jpg'))
+        bg = QtGui.QPalette()
+        bg.setBrush(self.backgroundRole(), QtGui.QBrush(QtGui.QPixmap("loginBg.jpg")))  # 设置背景图片
+        self.setPalette(bg)
 
     def keyPressEvent(self, event):
         if event.key() == QtCore.Qt.Key_Return or event.key() == QtCore.Qt.Key_Enter:
@@ -59,6 +62,9 @@ class Register(QtWidgets.QMainWindow, Ui_registerWidget):
         self.lineEdit.setFocus()
         self.setWindowTitle("注册")
         self.setWindowIcon(QIcon('main.jpg'))
+        bg = QtGui.QPalette()
+        bg.setBrush(self.backgroundRole(), QtGui.QBrush(QtGui.QPixmap("registerBg.jpg")))  # 设置背景图片
+        self.setPalette(bg)
 
     def registerDue(self):
         tempAccout = self.lineEdit.text()

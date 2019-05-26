@@ -82,6 +82,10 @@ class adminPutaway(QtWidgets.QMainWindow,Ui_adminPutaway):
         self.adminPutawayNameEdit.setFocus()
         self.setWindowIcon(QIcon('main.jpg'))
         self.setWindowTitle("上架")
+        bg = QtGui.QPalette()
+        bg.setBrush(self.backgroundRole(), QtGui.QBrush(QtGui.QPixmap("putawayBg.jpg")))  # 设置背景图片
+        self.setPalette(bg)
+
 
     def keyPressEvent(self, event):
         if event.key() == QtCore.Qt.Key_Return or event.key() == QtCore.Qt.Key_Enter:
@@ -159,6 +163,9 @@ class adminBookManage(QtWidgets.QMainWindow,Ui_adminBookManage):
         self.setWindowIcon(QIcon('main.jpg'))
         self.adminBookFindBtn.setStyleSheet("QPushButton{border-image: url(Find.jpg)}")
         self.setWindowTitle("图书管理")
+        bg = QtGui.QPalette()
+        bg.setBrush(self.backgroundRole(), QtGui.QBrush(QtGui.QPixmap("adminBookManageBg.jpg")))  # 设置背景图片
+        self.setPalette(bg)
 
 
     def keyPressEvent(self, event):
