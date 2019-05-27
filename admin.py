@@ -174,6 +174,22 @@ class adminBookManage(QtWidgets.QMainWindow,Ui_adminBookManage):
         bg = QtGui.QPalette()
         bg.setBrush(self.backgroundRole(), QtGui.QBrush(QtGui.QPixmap("adminBookManageBg.jpg")))  # 设置背景图片
         self.setPalette(bg)
+        self.adminBookTableWidget.horizontalHeader().sectionClicked.connect(self.HorSectionClicked)  # 表头单击信号
+
+
+    def HorSectionClicked(self, index):
+        if index == 1 or index == 2 or index == 3:
+            return
+        elif index == 0:
+            pass
+        elif index == 4:
+
+                qsort(0, len(self.results) - 1, self.results, index)
+                self.tableAdd()
+
+        elif index == 5:
+                qsort(0, len(self.results) - 1, self.results, index)
+                self.tableAdd()
 
 
     def keyPressEvent(self, event):
@@ -191,7 +207,7 @@ class adminBookManage(QtWidgets.QMainWindow,Ui_adminBookManage):
         if reply == QMessageBox.Yes:
             deleteBooks(tempname)
             self.signalDelete.emit()
-            self.results = self.bookFine()
+            self.results = list(self.bookFine())
             self.tableAdd()
         else:
             return
@@ -203,7 +219,7 @@ class adminBookManage(QtWidgets.QMainWindow,Ui_adminBookManage):
             QMessageBox.warning(self, "警告", "未找到符合书籍", QMessageBox.Ok)
             self.adminBookFindEdit.clear()
         else:
-            self.results = res
+            self.results = list(res)
             self.tableAdd()
 
 
@@ -224,9 +240,11 @@ class adminBookManage(QtWidgets.QMainWindow,Ui_adminBookManage):
             self.adminBookTableWidget.setItem(i, 1, QTableWidgetItem(self.results[i][2]))
             self.adminBookTableWidget.setItem(i, 2, QTableWidgetItem(self.results[i][3]))
             self.adminBookTableWidget.setItem(i, 3, QTableWidgetItem(self.results[i][4]))
-            self.adminBookTableWidget.setItem(i, 4, QTableWidgetItem(self.results[i][5]))
-            self.adminBookTableWidget.setItem(i, 5, QTableWidgetItem(self.results[i][6]))
-            self.adminBookTableWidget.setItem(i, 6, QTableWidgetItem(self.results[i][6]))
+            self.adminBookTableWidget.setItem(i, 4, QTableWidgetItem(str(self.results[i][5])))
+            self.adminBookTableWidget.setItem(i, 5, QTableWidgetItem(str(self.results[i][6])))
+
+
+
 
 
     def adminBookManageBack(self, results):
@@ -234,7 +252,6 @@ class adminBookManage(QtWidgets.QMainWindow,Ui_adminBookManage):
         self.adminBookTableWidget.clearContents()                                                                       # 清空信息，并将格式初始化
         self.adminBookTableWidget.setRowCount(0)
         self.close()
-
 
 
 class adminWindow(QtWidgets.QMainWindow,Ui_adminWindow):
@@ -462,10 +479,31 @@ def newItem(self, s, row, list):
     self.userTableWidget.setItem(row, list, newItem)
 
 
+def qsort(l, r, res, index):
+    if l >= r:
+        return
+    left, right = l, r
+    base = res[l]
+    while l < r:
+        while l < r and res[r][index + 1] >= base[index + 1]:
+            r -= 1
+        if l < r:
+            res[l] = res[r]
+        while l < r and res[l][index+ 1] <= base[index+ 1]:
+            l += 1
+        if l < r:
+            res[r] = res[l]
+    res[l] = base
+    qsort(left, l - 1, res, index)
+    qsort(l + 1, right, res, index)
+
+
+
 
 if __name__ ==  '__main__':
     app=QtWidgets.QApplication(sys.argv)
     adminWindowT = adminWindow()
     adminWindowT.show()
     adminBookT=adminBook()
+
     sys.exit(app.exec())
