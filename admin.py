@@ -167,6 +167,7 @@ class adminBookManage(QtWidgets.QMainWindow,Ui_adminBookManage):
         self.results = None
         self.adminBookTableWidget.setSelectionBehavior(QAbstractItemView.SelectRows)
         self.adminBookTableWidget.setEditTriggers(QAbstractItemView.NoEditTriggers)
+        self.adminBookTableWidget.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         self.setWindowIcon(QIcon('main.jpg'))
         self.adminBookFindBtn.setStyleSheet("QPushButton{border-image: url(Find.jpg)}")
         self.setWindowTitle("图书管理")
@@ -275,6 +276,7 @@ class adminUserManage(QtWidgets.QMainWindow,Ui_adminUserManageWidget):
         self.setupUi(self)                # 初始化界面
         self.adminUserTable2.setEditTriggers(QAbstractItemView.NoEditTriggers)       # 设置tablewidget为只读
         self.adminUserTable2.setSelectionBehavior(QAbstractItemView.SelectRows)          # 设置tablewidge为单行选中
+        self.adminUserTable2.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         self.adminUserLineEdit2.setFocus()
         self.setWindowIcon(QIcon('main.jpg'))
         self.adminUserFindBtn.setStyleSheet("QPushButton{border-image: url(Find.jpg)}")
