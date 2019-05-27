@@ -164,6 +164,7 @@ class adminBookManage(QtWidgets.QMainWindow,Ui_adminBookManage):
     def __init__(self):
         super(adminBookManage,self).__init__()
         self.setupUi(self)
+        self.results = None
         self.adminBookTableWidget.setSelectionBehavior(QAbstractItemView.SelectRows)
         self.adminBookTableWidget.setEditTriggers(QAbstractItemView.NoEditTriggers)
         self.setWindowIcon(QIcon('main.jpg'))
@@ -189,32 +190,45 @@ class adminBookManage(QtWidgets.QMainWindow,Ui_adminBookManage):
         if reply == QMessageBox.Yes:
             deleteBooks(tempname)
             self.signalDelete.emit()
+            self.results = self.bookFine()
+            self.tableAdd()
         else:
             return
 
 
     def adminBookFind(self):
-        bookkind = self.comboBox.currentText()
-        bookdata = self.adminBookFindEdit.text()
-        results=adminFindFunction(bookdata, bookkind)
-        if len(results) == 0:
-            # QMessageBox.Warning(self, "", "未找到符合的书籍", QMessageBox.Ok)                 # 结果为0查找失败返回
+        res = self.bookFine()
+        if res == 0:
             QMessageBox.warning(self, "警告", "未找到符合书籍", QMessageBox.Ok)
             self.adminBookFindEdit.clear()
-            return
         else:
-            self.adminBookTableWidget.setRowCount(len(results))
-            for i in range(len(results)):
-                self.adminBookTableWidget.setItem(i, 0, QTableWidgetItem(results[i][1]))        #设置单元格内容
-                self.adminBookTableWidget.setItem(i, 1, QTableWidgetItem(results[i][2]))
-                self.adminBookTableWidget.setItem(i, 2, QTableWidgetItem(results[i][3]))
-                self.adminBookTableWidget.setItem(i, 3, QTableWidgetItem(results[i][4]))
-                self.adminBookTableWidget.setItem(i, 4, QTableWidgetItem(results[i][5]))
-                self.adminBookTableWidget.setItem(i, 5, QTableWidgetItem(results[i][6]))
-                self.adminBookTableWidget.setItem(i, 6, QTableWidgetItem(results[i][6]))                                #
+            self.results = res
+            self.tableAdd()
 
 
-    def adminBookManageBack(self):
+    def bookFine(self):
+        bookkind = self.comboBox.currentText()
+        bookdata = self.adminBookFindEdit.text()
+        results = adminFindFunction(bookdata, bookkind)
+        if len(results) == 0:
+            return 0
+        else:
+            return results
+
+
+    def tableAdd(self):
+        self.adminBookTableWidget.setRowCount(len(self.results))
+        for i in range(len(self.results)):
+            self.adminBookTableWidget.setItem(i, 0, QTableWidgetItem(self.results[i][1]))  # 设置单元格内容
+            self.adminBookTableWidget.setItem(i, 1, QTableWidgetItem(self.results[i][2]))
+            self.adminBookTableWidget.setItem(i, 2, QTableWidgetItem(self.results[i][3]))
+            self.adminBookTableWidget.setItem(i, 3, QTableWidgetItem(self.results[i][4]))
+            self.adminBookTableWidget.setItem(i, 4, QTableWidgetItem(self.results[i][5]))
+            self.adminBookTableWidget.setItem(i, 5, QTableWidgetItem(self.results[i][6]))
+            self.adminBookTableWidget.setItem(i, 6, QTableWidgetItem(self.results[i][6]))
+
+
+    def adminBookManageBack(self, results):
         self.adminBookFindEdit.clear()
         self.adminBookTableWidget.clearContents()                                                                       # 清空信息，并将格式初始化
         self.adminBookTableWidget.setRowCount(0)
@@ -324,7 +338,7 @@ def adminFindFunction(bookData=None, bookKind=None):
     elif bookKind == '序列号':
         sql = 'SELECT * FROM books WHERE book_no REGEXP "%s"' % (bookData)
     elif bookKind == '全部':
-        pass
+        sql = 'SELECT * FROM BOOKS'
     elif bookKind == '种类':
         sql = 'SELECT * FROM books WHERE book_kind REGEXP "%s"' % (bookData)
     try:
