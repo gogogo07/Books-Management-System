@@ -46,9 +46,9 @@ class Login(QtWidgets.QMainWindow, Ui_loginWidgrt):
                 userWindow.load()
                 userWindow.show()
                 self.close()
-        else:
-            QMessageBox.warning(self, "错误", "密码错误，请重新输入", QMessageBox.Yes)
-            self.lineEdit_2.clear()
+            else:
+                QMessageBox.warning(self, "错误", "密码错误，请重新输入", QMessageBox.Yes)
+                self.lineEdit_2.clear()
 
 
     def register123(self):
