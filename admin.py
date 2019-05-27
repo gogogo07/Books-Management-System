@@ -128,7 +128,17 @@ class adminPutaway(QtWidgets.QMainWindow,Ui_adminPutaway):
                                     book_name,book_author, book_kind, book_number, book_left, book_lending) \
                                     VALUES(%s, %s, %s, %s, %s, %s)", (tempname, tempauthor, tempkind, tempno, tempnum, 0))
                     con.commit()
-                    QMessageBox.warning(self, "", "书籍上架成功", QMessageBox.Ok)
+                    reply = QMessageBox.question(self, '信息', '上架成功，是否继续？',
+                                                 QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+                    if reply == QMessageBox.Yes:
+                        self.adminPutawayNameEdit.clear()
+                        self.adminPutawayKindEdit.clear()
+                        self.adminPutawayNumEdit.clear()
+                        self.adminPutawayNoEdit.clear()
+                        self.adminPutawayAuthor.clear()
+                        return
+                    else:
+                        self.adminPutawayBack()
                     self.putBook.emit()
                 except Exception as e:
                     con.rollback()
