@@ -185,6 +185,8 @@ class adminBookManage(QtWidgets.QMainWindow,Ui_adminBookManage):
         bg.setBrush(self.backgroundRole(), QtGui.QBrush(QtGui.QPixmap("adminBookManageBg.jpg")))  # 设置背景图片
         self.setPalette(bg)
         self.adminBookTableWidget.horizontalHeader().sectionClicked.connect(self.HorSectionClicked)  # 表头单击信号
+        self.lending = 0
+        self.left = 0
 
 
     def HorSectionClicked(self, index):
@@ -193,13 +195,25 @@ class adminBookManage(QtWidgets.QMainWindow,Ui_adminBookManage):
         elif index == 0:
             pass
         elif index == 4:
-
-                qsort(0, len(self.results) - 1, self.results, index)
-                self.tableAdd()
-
+            if self.lending == 0:
+                qsortIncrease(0, len(self.results) - 1, self.results, index)
+                self.lending = 1
+                self.left = 0
+            else:
+                qsortDecrease(0, len(self.results) - 1, self.results, index)
+                self.lending = 0
+                self.left = 0
+            self.tableAdd()
         elif index == 5:
-                qsort(0, len(self.results) - 1, self.results, index)
-                self.tableAdd()
+            if self.left == 0:
+                qsortIncrease(0, len(self.results) - 1, self.results, index)
+                self.left = 1
+                self.lending = 0
+            else:
+                qsortDecrease(0, len(self.results) - 1, self.results, index)
+                self.left = 0
+                self.lending = 0
+            self.tableAdd()
 
 
     def keyPressEvent(self, event):
@@ -489,7 +503,7 @@ def newItem(self, s, row, list):
     self.userTableWidget.setItem(row, list, newItem)
 
 
-def qsort(l, r, res, index):
+def qsortIncrease(l, r, res, index):
     if l >= r:
         return
     left, right = l, r
@@ -504,10 +518,27 @@ def qsort(l, r, res, index):
         if l < r:
             res[r] = res[l]
     res[l] = base
-    qsort(left, l - 1, res, index)
-    qsort(l + 1, right, res, index)
+    qsortIncrease(left, l - 1, res, index)
+    qsortIncrease(l + 1, right, res, index)
 
 
+def qsortDecrease(l, r, res, index):
+    if l >= r:
+        return
+    left, right = l, r
+    base = res[l]
+    while l < r:
+        while l < r and res[r][index + 1] <= base[index + 1]:
+            r -= 1
+        if l < r:
+            res[l] = res[r]
+        while l < r and res[l][index+ 1] >= base[index+ 1]:
+            l += 1
+        if l < r:
+            res[r] = res[l]
+    res[l] = base
+    qsortDecrease(left, l - 1, res, index)
+    qsortDecrease(l + 1, right, res, index)
 
 
 if __name__ ==  '__main__':
