@@ -20,6 +20,7 @@ class myRecord(QtWidgets.QWidget, Ui_myRecord):
         self.account = None
         self.setupUi(self)
         self.recordTableWidget.setEditTriggers(QAbstractItemView.NoEditTriggers)    # 设置不可编辑
+        self.recordTableWidget.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         self.user = classes.User()
         self.load()
         self.tableShow()
@@ -141,6 +142,7 @@ class userWindow(QtWidgets.QWidget, Ui_userWindow):
         self.account = None
         self.setupUi(self)
         self.userTableWidget.setEditTriggers(QAbstractItemView.NoEditTriggers)          # 设置不可编辑
+        self.userTableWidget.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         self.child = myRecord()                                                         # 子窗口实例化
         self.user = classes.User()
         self.load()

@@ -60,8 +60,8 @@ class Register(QtWidgets.QMainWindow, Ui_registerWidget):
     def __init__(self):
         super(Register,self).__init__()
         self.setupUi(self)
-        self.lineEdit.setPlaceholderText("账号由8-12位数字与字母组成")
-        self.lineEdit_2.setPlaceholderText("密码由8-12位字母与数字组成")
+        self.lineEdit.setPlaceholderText("请输入账号")
+        self.lineEdit_2.setPlaceholderText("密码由6-12位字母与数字组成")
         self.lineEdit_3.setPlaceholderText("请重新输入密码")
         self.lineEdit_2.setEchoMode(QLineEdit.Password)
         self.lineEdit_3.setEchoMode(QLineEdit.Password)
@@ -87,16 +87,16 @@ class Register(QtWidgets.QMainWindow, Ui_registerWidget):
             self.lineEdit.clear()
             self.lineEdit_2.clear()
             self.lineEdit_3.clear()
-        elif len(tempAccout) < 8:
-            QMessageBox.warning(self, "错误", "账号长度太短", QMessageBox.Ok)
-            self.lineEdit.clear()
-            self.lineEdit_2.clear()
-            self.lineEdit_3.clear()
+        #elif len(tempAccout) < 6:
+        #    QMessageBox.warning(self, "错误", "账号长度太短", QMessageBox.Ok)
+        #    self.lineEdit.clear()
+        #    self.lineEdit_2.clear()
+        #   self.lineEdit_3.clear()
         elif len(tempPassword) >12:
             QMessageBox.warning(self, "错误", "密码长度太长", QMessageBox.Ok)
             self.lineEdit_2.clear()
             self.lineEdit_3.clear()
-        elif len(tempPassword) < 8:
+        elif len(tempPassword) < 6:
             QMessageBox.warning(self, "错误", "账号长度太短", QMessageBox.Ok)
             self.lineEdit_2.clear()
             self.lineEdit_3.clear()
