@@ -12,8 +12,9 @@ import sys
 import os
 
 
+
 class myRecord(QtWidgets.QWidget, Ui_myRecord):
-    ret =pyqtSignal()
+    ret = pyqtSignal()
     def __init__(self):
         super(myRecord, self).__init__()
         self.account = None
@@ -106,7 +107,6 @@ class myRecord(QtWidgets.QWidget, Ui_myRecord):
                         cursor.execute("UPDATE books SET book_left = book_left + 1 ,book_lending = book_lending - 1 WHERE book_name = %s",
                                        (bookName))
                         con.commit()
-                        print("更新成功")
 
                     except Exception as e:
                         print(e)
@@ -120,7 +120,6 @@ class myRecord(QtWidgets.QWidget, Ui_myRecord):
                         cursor.execute("INSERT INTO records(user_name, operator, book_name, time) VALUES(%s, %s, %s, %s)",
                                        (self.user.account, '归还了', bookName, returnTime))
                         con.commit()
-                        print ("记录保存成功")
                     except Exception as e:
                         con.rollback()
                         print (e)
@@ -159,7 +158,6 @@ class userWindow(QtWidgets.QWidget, Ui_userWindow):
             self.user.setdata(results[0][1], results[0][2], results[0][3], lending, history)
             # self.user.show()
             timee = int(time.strftime("%H", time.localtime()))
-            print(timee)
             if timee < 5 or timee > 18:
                 hellostr = "晚上好！"
             elif timee >5 and timee <12:
@@ -226,7 +224,6 @@ class userWindow(QtWidgets.QWidget, Ui_userWindow):
                 return
             cellItem1 = self.userTableWidget.item(curRow, 0)                            # 获取图书名称
             bookName = cellItem1.text()
-            print (self.user.lending)
             if bookName in self.user.lending:
                 QMessageBox.warning(self, "警告", "这本书你已经借了，而且还没有归还，不可重复再借同一本书。", QMessageBox.Yes)
             else:
@@ -258,7 +255,6 @@ class userWindow(QtWidgets.QWidget, Ui_userWindow):
                             "INSERT INTO records(user_name, operator, book_name, time) VALUES(%s, %s, %s, %s)",
                             (self.user.account, '借阅了', bookName, lendTime))
                         con.commit()
-                        print("记录保存成功")
                     except Exception as e:
                         con.rollback()
                         print(e)

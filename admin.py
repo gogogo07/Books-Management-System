@@ -1,4 +1,5 @@
 from PyQt5.QtWidgets import *
+from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from adminUserManage import Ui_adminUserManageWidget
 from adminWindow import Ui_adminWindow
@@ -17,6 +18,7 @@ class adminBook(QtWidgets.QMainWindow, Ui_adminBook):
         super(adminBook,self).__init__()
         self.setupUi(self)
         self.messageShow()
+        self.messageUpdata()
         self.chillBookManWin = adminBookManage()
         self.chillPutawayWin = adminPutaway()
         self.setWindowIcon(QIcon('main.jpg'))                       # 设置标题图片
@@ -24,6 +26,8 @@ class adminBook(QtWidgets.QMainWindow, Ui_adminBook):
         bg.setBrush(self.backgroundRole(), QtGui.QBrush(QtGui.QPixmap("adminBookBg.jpg")))  # 设置背景图片
         self.setPalette(bg)
         self.setWindowTitle("图书管理")
+        self.chillPutawayWin.putBook.connect(self.messageUpdata)
+        self.chillBookManWin.signalDelete.connect(self.messageUpdata)
 
     def adminBookBack(self):
         self.hide()
@@ -36,7 +40,6 @@ class adminBook(QtWidgets.QMainWindow, Ui_adminBook):
         self.chillPutawayWin.show()
 
     def messageShow(self):
-        self.adminBookSumLab.setText("当前图书馆的藏书为： " + str(getBookSum()))
         records = getRecords()
         self.adminBookLab1.setText(records[0][1] + '于' + records[0][4] + records[0][2] + '一本《' + records[0][3] + '》。')
         self.adminBookLab2.setText(records[1][1] + '于' + records[1][4] + records[1][2] + '一本《' + records[1][3] + '》。')
@@ -48,6 +51,10 @@ class adminBook(QtWidgets.QMainWindow, Ui_adminBook):
         self.adminBookLab3.setFont(QFont("Roman times", 12, QFont.Bold))
         self.adminBookLab4.setFont(QFont("Roman times", 12, QFont.Bold))
         self.adminBookLab5.setFont(QFont("Roman times", 12, QFont.Bold))
+
+
+    def messageUpdata(self):
+        self.adminBookSumLab.setText("当前图书馆的藏书为： " + str(getBookSum()))
 
 
 def getBookSum():
@@ -75,13 +82,17 @@ def getRecords():
 
 
 class adminPutaway(QtWidgets.QMainWindow,Ui_adminPutaway):
-
+    putBook = pyqtSignal()
     def __init__(self):
         super(adminPutaway,self).__init__()
         self.setupUi(self)
         self.adminPutawayNameEdit.setFocus()
         self.setWindowIcon(QIcon('main.jpg'))
         self.setWindowTitle("上架")
+        bg = QtGui.QPalette()
+        bg.setBrush(self.backgroundRole(), QtGui.QBrush(QtGui.QPixmap("putawayBg.jpg")))  # 设置背景图片
+        self.setPalette(bg)
+
 
     def keyPressEvent(self, event):
         if event.key() == QtCore.Qt.Key_Return or event.key() == QtCore.Qt.Key_Enter:
@@ -110,31 +121,29 @@ class adminPutaway(QtWidgets.QMainWindow,Ui_adminPutaway):
 
         else:
             con, cursor = connect.connection()
-            res = get_books(tempnum)
+            res = get_books(tempno)
             if res == 0:
                 try:
                     cursor.execute("INSERT INTO books(\
                                     book_name,book_author, book_kind, book_number, book_left, book_lending) \
                                     VALUES(%s, %s, %s, %s, %s, %s)", (tempname, tempauthor, tempkind, tempno, tempnum, 0))
                     con.commit()
-                    QMessageBox.Warning(self, "", "书籍上架成功", QMessageBox.Ok)
+                    QMessageBox.warning(self, "", "书籍上架成功", QMessageBox.Ok)
+                    self.putBook.emit()
                 except Exception as e:
                     con.rollback()
                     print (e)
                 finally:
                     cursor.close()
                     con.close()
-
             else:
                 sql = "UPDATE books SET book_left = book_left + 1 WHERE book_number = '%s'" % (tempnum)
                 try:
                     cursor.execute(sql)
                     con.commit()
-                    print("更新成功")
-                    QMessageBox.warning(self, "", "书籍上架成功", QMessageBox.Ok)
+                    QMessageBox.warning(self, "", "此书籍已经存在于书库，改数数目增加", QMessageBox.Ok)
                 except Exception as e:
                     con.rollback()
-                    print(e)
                 finally:
                     cursor.close()
                     con.close()
@@ -151,6 +160,7 @@ class adminPutaway(QtWidgets.QMainWindow,Ui_adminPutaway):
 
 
 class adminBookManage(QtWidgets.QMainWindow,Ui_adminBookManage):
+    signalDelete = pyqtSignal()
     def __init__(self):
         super(adminBookManage,self).__init__()
         self.setupUi(self)
@@ -159,6 +169,9 @@ class adminBookManage(QtWidgets.QMainWindow,Ui_adminBookManage):
         self.setWindowIcon(QIcon('main.jpg'))
         self.adminBookFindBtn.setStyleSheet("QPushButton{border-image: url(Find.jpg)}")
         self.setWindowTitle("图书管理")
+        bg = QtGui.QPalette()
+        bg.setBrush(self.backgroundRole(), QtGui.QBrush(QtGui.QPixmap("adminBookManageBg.jpg")))  # 设置背景图片
+        self.setPalette(bg)
 
 
     def keyPressEvent(self, event):
@@ -175,6 +188,7 @@ class adminBookManage(QtWidgets.QMainWindow,Ui_adminBookManage):
                                      QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
         if reply == QMessageBox.Yes:
             deleteBooks(tempname)
+            self.signalDelete.emit()
         else:
             return
 
@@ -281,7 +295,6 @@ class adminUserManage(QtWidgets.QMainWindow,Ui_adminUserManageWidget):
     def adminUserFind(self):
         tempusername=self.adminUserLineEdit2.text()             # 获取用户xing
         results = adminUserFindFunction(tempusername)
-        print (results)
         if len(results) != 0:
             lending = eval(results[0][4])
             history = eval(results[0][5])
@@ -352,7 +365,6 @@ def getdata(sql):
         results = cursor.fetchall()
         cursor.close()
         con.close()
-        print (results)
         return results
     except:
         print ('获取失败')
@@ -372,7 +384,6 @@ def deleteBooks(bookName):
     try:
         cursor.execute(sql)
         con.commit()
-        print ("删除成功")
     except Exception as e:
         con.rollback()
         print (e)
@@ -383,9 +394,7 @@ def deleteBooks(bookName):
 
 def red(self, bookTotal):
     """将剩余量为0的标红"""
-    print("red")
     for curRow in range(bookTotal):
-        print(curRow)
         cellItem = self.userTableWidget.item(curRow, 4)
         str = cellItem.text()
         bookNumber = int(str)
@@ -421,7 +430,7 @@ def search(book_name = None, book_author = None, book_kind = None):
 
 def get_books(number):
     con, cursor = connect.connection()
-    sql = 'SELECT * FROM books WHERE book_number REGEXP "%s"' % (number)
+    sql = 'SELECT * FROM books WHERE book_number = "%s"' % (number)
     res = cursor.execute(sql)
     cursor.close()
     con.close()
