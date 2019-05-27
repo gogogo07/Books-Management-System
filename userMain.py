@@ -23,6 +23,9 @@ class myRecord(QtWidgets.QWidget, Ui_myRecord):
         self.user = classes.User()
         self.load()
         self.tableShow()
+        bg = QtGui.QPalette()
+        bg.setBrush(self.backgroundRole(), QtGui.QBrush(QtGui.QPixmap("myRecordWindow.jpg")))  # 设置背景图片
+        self.setPalette(bg)
 
     def tableShow(self):
         """表格初始化"""
@@ -141,6 +144,9 @@ class userWindow(QtWidgets.QWidget, Ui_userWindow):
         self.child = myRecord()                                                         # 子窗口实例化
         self.user = classes.User()
         self.load()
+        bg = QtGui.QPalette()
+        bg.setBrush(self.backgroundRole(), QtGui.QBrush(QtGui.QPixmap("userWindow.jpg")))  # 设置背景图片
+        self.setPalette(bg)
 
 
     def load(self):

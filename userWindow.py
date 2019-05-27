@@ -12,7 +12,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_userWindow(object):
     def setupUi(self, userWindow):
         userWindow.setObjectName("userWindow")
-        userWindow.resize(1000, 600)
+        userWindow.resize(1085, 600)
         userWindow.setStyleSheet("QWidget#customWidget {\n"
 "        background: rgb(173, 202, 232);\n"
 "}\n"
@@ -196,6 +196,9 @@ class Ui_userWindow(object):
 "}\n"
 "\n"
 "/**********表头**********/\n"
+"QTableView QTableCornerButton::section {\n"
+"    background: transparent;\n"
+" }\n"
 "QHeaderView{\n"
 "        border: none;\n"
 "        border-bottom: 3px solid rgb(0, 78, 161);\n"
@@ -203,6 +206,12 @@ class Ui_userWindow(object):
 "        min-height: 30px;\n"
 "}\n"
 "QHeaderView::section:horizontal {\n"
+"        border: none;\n"
+"        color: rgb(2, 65, 132);\n"
+"        background: transparent;\n"
+"        padding-left: 5px;\n"
+"}\n"
+"QHeaderView::section:vertical {\n"
 "        border: none;\n"
 "        color: rgb(2, 65, 132);\n"
 "        background: transparent;\n"
@@ -239,9 +248,10 @@ class Ui_userWindow(object):
 "\n"
 "/**********表格**********/\n"
 "QTableView {\n"
-"        border: 1px solid rgb(111, 156, 207);\n"
-"        background: rgb(224, 238, 255);\n"
-"        gridline-color: rgb(111, 156, 207);\n"
+"        /*border: 1px solid rgb(111, 156, 207);\n"
+"        \n"
+"        gridline-color: rgb(111, 156, 207);*/\n"
+"background:transparent\n"
 "}\n"
 "QTableView::item {\n"
 "        padding-left: 5px;\n"
@@ -934,16 +944,16 @@ class Ui_userWindow(object):
 "}\n"
 "")
         self.userHotBtn = QtWidgets.QPushButton(userWindow)
-        self.userHotBtn.setGeometry(QtCore.QRect(30, 30, 161, 31))
+        self.userHotBtn.setGeometry(QtCore.QRect(120, 30, 161, 31))
         self.userHotBtn.setObjectName("userHotBtn")
         self.userRecordBtn = QtWidgets.QPushButton(userWindow)
-        self.userRecordBtn.setGeometry(QtCore.QRect(880, 20, 93, 51))
+        self.userRecordBtn.setGeometry(QtCore.QRect(940, 20, 93, 51))
         self.userRecordBtn.setObjectName("userRecordBtn")
         self.userBookRecBtn = QtWidgets.QPushButton(userWindow)
-        self.userBookRecBtn.setGeometry(QtCore.QRect(30, 80, 161, 31))
+        self.userBookRecBtn.setGeometry(QtCore.QRect(120, 80, 161, 31))
         self.userBookRecBtn.setObjectName("userBookRecBtn")
         self.userTableWidget = QtWidgets.QTableWidget(userWindow)
-        self.userTableWidget.setGeometry(QtCore.QRect(30, 130, 761, 441))
+        self.userTableWidget.setGeometry(QtCore.QRect(120, 130, 761, 441))
         self.userTableWidget.setSelectionBehavior(QtWidgets.QAbstractItemView.SelectRows)
         self.userTableWidget.setObjectName("userTableWidget")
         self.userTableWidget.setColumnCount(6)
@@ -961,13 +971,13 @@ class Ui_userWindow(object):
         item = QtWidgets.QTableWidgetItem()
         self.userTableWidget.setHorizontalHeaderItem(5, item)
         self.userExitBtn = QtWidgets.QPushButton(userWindow)
-        self.userExitBtn.setGeometry(QtCore.QRect(890, 510, 93, 51))
+        self.userExitBtn.setGeometry(QtCore.QRect(940, 510, 93, 51))
         self.userExitBtn.setObjectName("userExitBtn")
         self.userBorrowBtn = QtWidgets.QPushButton(userWindow)
-        self.userBorrowBtn.setGeometry(QtCore.QRect(880, 160, 93, 51))
+        self.userBorrowBtn.setGeometry(QtCore.QRect(940, 160, 93, 51))
         self.userBorrowBtn.setObjectName("userBorrowBtn")
         self.kindofBooksBox = QtWidgets.QComboBox(userWindow)
-        self.kindofBooksBox.setGeometry(QtCore.QRect(540, 70, 101, 41))
+        self.kindofBooksBox.setGeometry(QtCore.QRect(630, 70, 101, 41))
         self.kindofBooksBox.setObjectName("kindofBooksBox")
         self.kindofBooksBox.addItem("")
         self.kindofBooksBox.addItem("")
@@ -975,17 +985,17 @@ class Ui_userWindow(object):
         self.kindofBooksBox.addItem("")
         self.kindofBooksBox.addItem("")
         self.bookNameEdit = QtWidgets.QLineEdit(userWindow)
-        self.bookNameEdit.setGeometry(QtCore.QRect(270, 70, 271, 41))
+        self.bookNameEdit.setGeometry(QtCore.QRect(360, 70, 271, 41))
         self.bookNameEdit.setText("")
         self.bookNameEdit.setFrame(True)
         self.bookNameEdit.setEchoMode(QtWidgets.QLineEdit.Normal)
         self.bookNameEdit.setObjectName("bookNameEdit")
         self.userFindBtn = QtWidgets.QPushButton(userWindow)
-        self.userFindBtn.setGeometry(QtCore.QRect(640, 70, 101, 41))
+        self.userFindBtn.setGeometry(QtCore.QRect(730, 70, 101, 41))
         self.userFindBtn.setStyleSheet("")
         self.userFindBtn.setObjectName("userFindBtn")
         self.userLabel = QtWidgets.QLabel(userWindow)
-        self.userLabel.setGeometry(QtCore.QRect(270, 20, 521, 41))
+        self.userLabel.setGeometry(QtCore.QRect(340, 20, 521, 41))
         self.userLabel.setText("")
         self.userLabel.setObjectName("userLabel")
 

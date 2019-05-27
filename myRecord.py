@@ -12,7 +12,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_myRecord(object):
     def setupUi(self, myRecord):
         myRecord.setObjectName("myRecord")
-        myRecord.resize(546, 401)
+        myRecord.resize(590, 381)
         myRecord.setStyleSheet("QWidget#customWidget {\n"
 "        background: rgb(173, 202, 232);\n"
 "}\n"
@@ -349,7 +349,7 @@ class Ui_myRecord(object):
 "\n"
 "")
         self.recordTableWidget = QtWidgets.QTableWidget(myRecord)
-        self.recordTableWidget.setGeometry(QtCore.QRect(30, 100, 381, 271))
+        self.recordTableWidget.setGeometry(QtCore.QRect(30, 70, 411, 271))
         self.recordTableWidget.setSelectionBehavior(QtWidgets.QAbstractItemView.SelectRows)
         self.recordTableWidget.setObjectName("recordTableWidget")
         self.recordTableWidget.setColumnCount(3)
@@ -360,15 +360,15 @@ class Ui_myRecord(object):
         self.recordTableWidget.setHorizontalHeaderItem(1, item)
         item = QtWidgets.QTableWidgetItem()
         self.recordTableWidget.setHorizontalHeaderItem(2, item)
-        self.label = QtWidgets.QLabel(myRecord)
-        self.label.setGeometry(QtCore.QRect(160, 40, 131, 41))
-        self.label.setObjectName("label")
         self.userReturnBtn = QtWidgets.QPushButton(myRecord)
-        self.userReturnBtn.setGeometry(QtCore.QRect(430, 100, 93, 51))
+        self.userReturnBtn.setGeometry(QtCore.QRect(470, 80, 93, 51))
         self.userReturnBtn.setObjectName("userReturnBtn")
         self.userRecordExitBtn = QtWidgets.QPushButton(myRecord)
-        self.userRecordExitBtn.setGeometry(QtCore.QRect(430, 320, 93, 51))
+        self.userRecordExitBtn.setGeometry(QtCore.QRect(470, 280, 93, 51))
         self.userRecordExitBtn.setObjectName("userRecordExitBtn")
+        self.textEdit = QtWidgets.QTextEdit(myRecord)
+        self.textEdit.setGeometry(QtCore.QRect(170, 30, 151, 31))
+        self.textEdit.setObjectName("textEdit")
 
         self.retranslateUi(myRecord)
         self.userRecordExitBtn.clicked.connect(myRecord.close)
@@ -384,8 +384,12 @@ class Ui_myRecord(object):
         item.setText(_translate("myRecord", "借阅时间"))
         item = self.recordTableWidget.horizontalHeaderItem(2)
         item.setText(_translate("myRecord", "归还时间"))
-        self.label.setText(_translate("myRecord", "<html><head/><body><p><span style=\" font-size:12pt; font-weight:600;\">我的借阅记录</span></p></body></html>"))
         self.userReturnBtn.setText(_translate("myRecord", "归还图书"))
         self.userRecordExitBtn.setText(_translate("myRecord", "退出"))
+        self.textEdit.setHtml(_translate("myRecord", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:\'SimSun\'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
+"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:12pt;\">我的借阅记录</span></p></body></html>"))
 
 
