@@ -136,10 +136,11 @@ class adminPutaway(QtWidgets.QMainWindow,Ui_adminPutaway):
                         self.adminPutawayNumEdit.clear()
                         self.adminPutawayNoEdit.clear()
                         self.adminPutawayAuthor.clear()
+                        self.putBook.emit()
                         return
                     else:
+                        self.putBook.emit()
                         self.adminPutawayBack()
-                    self.putBook.emit()
                 except Exception as e:
                     con.rollback()
                     print (e)
@@ -368,7 +369,7 @@ class adminUserManage(QtWidgets.QMainWindow,Ui_adminUserManageWidget):
                 j += 1
             self.adminUserLab.setText(results[0][1])
         else:
-            QMessageBox.warning(self,"警告", '抱歉，没有找到与%s有关的书。'%(tempusername), QMessageBox.Ok)
+            QMessageBox.warning(self,"警告", '抱歉，账号输入有误，请重新输入。',  QMessageBox.Ok)
 
 
 def adminFindFunction(bookData=None, bookKind=None):
@@ -408,7 +409,6 @@ def adminUserFindFunction(userData):
         con.close()
         return results
     except:
-        print('获取失败')
         cursor.close()
         con.close()
         p = tuple()
