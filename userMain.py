@@ -149,6 +149,36 @@ class userWindow(QtWidgets.QWidget, Ui_userWindow):
         bg = QtGui.QPalette()
         bg.setBrush(self.backgroundRole(), QtGui.QBrush(QtGui.QPixmap("userWindow.jpg")))  # 设置背景图片
         self.setPalette(bg)
+        self.userTableWidget.horizontalHeader().sectionClicked.connect(self.HorSectionClicked)
+        self.lending = 0
+        self.left = 0
+
+
+    def HorSectionClicked(self, index):
+        if index == 1 or index == 2 or index == 3:
+            return
+        elif index == 0:
+            pass
+        elif index == 4:
+            if self.lending == 0:
+                qsortIncrease(0, len(self.results) - 1, self.results, index)
+                self.lending = 1
+                self.left = 0
+            else:
+                qsortDecrease(0, len(self.results) - 1, self.results, index)
+                self.lending = 0
+                self.left = 0
+            self.tableAdd()
+        elif index == 5:
+            if self.left == 0:
+                qsortIncrease(0, len(self.results) - 1, self.results, index)
+                self.left = 1
+                self.lending = 0
+            else:
+                qsortDecrease(0, len(self.results) - 1, self.results, index)
+                self.left = 0
+                self.lending = 0
+            self.tableAdd()
 
 
     def load(self):
@@ -199,20 +229,24 @@ class userWindow(QtWidgets.QWidget, Ui_userWindow):
             for i in range(len(bookKinds)):
                 if bookKinds[i] == kind:
                     d['book_kind'] = bookKinds[i+1]
-            results = search(**d)
-            if len(results) == 0:
+            self.results = search(**d)
+            if len(self.results) == 0:
                 QMessageBox.warning(self, "警告", "抱歉，没有找到与‘"+bookFind+"’相关的书籍，建议适当减少筛选条件",
                                     QMessageBox.Ok)
-            self.userTableWidget.setRowCount(len(results))
-            row = 0
+            self.tableAdd()
+
+
+    def tableAdd(self):
+        self.userTableWidget.setRowCount(len(self.results))
+        row = 0
+        list = 0
+        for result in self.results:
+            for l in range(1, 7):
+                newItem(self, result[l], row, list)
+                list += 1
+            row += 1
             list = 0
-            for result in results:
-                for l in range(1, 7):
-                    newItem(self, result[l], row, list)
-                    list += 1
-                row += 1
-                list = 0
-            red(self, len(results))
+        red(self, len(self.results))
 
 
     def userExit(self):
@@ -310,6 +344,7 @@ def search(book_name = None, book_author = None, book_kind = None):
         results = cursor.fetchall()
         cursor.close()
         con.close()
+        results = list(results)
         return results
     except:
         cursor.close()
@@ -342,3 +377,39 @@ def red(self,bookTotal):
         if bookNumber == 0:
             cellItem.setForeground(QBrush(QColor(255, 0, 0)))                           # 红色
 
+def qsortIncrease(l, r, res, index):
+    if l >= r:
+        return
+    left, right = l, r
+    base = res[l]
+    while l < r:
+        while l < r and res[r][index + 1] >= base[index + 1]:
+            r -= 1
+        if l < r:
+            res[l] = res[r]
+        while l < r and res[l][index+ 1] <= base[index+ 1]:
+            l += 1
+        if l < r:
+            res[r] = res[l]
+    res[l] = base
+    qsortIncrease(left, l - 1, res, index)
+    qsortIncrease(l + 1, right, res, index)
+
+
+def qsortDecrease(l, r, res, index):
+    if l >= r:
+        return
+    left, right = l, r
+    base = res[l]
+    while l < r:
+        while l < r and res[r][index + 1] <= base[index + 1]:
+            r -= 1
+        if l < r:
+            res[l] = res[r]
+        while l < r and res[l][index+ 1] >= base[index+ 1]:
+            l += 1
+        if l < r:
+            res[r] = res[l]
+    res[l] = base
+    qsortDecrease(left, l - 1, res, index)
+    qsortDecrease(l + 1, right, res, index)

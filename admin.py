@@ -269,9 +269,6 @@ class adminBookManage(QtWidgets.QMainWindow,Ui_adminBookManage):
             self.adminBookTableWidget.setItem(i, 5, QTableWidgetItem(str(self.results[i][6])))
 
 
-
-
-
     def adminBookManageBack(self, results):
         self.adminBookFindEdit.clear()
         self.adminBookTableWidget.clearContents()                                                                       # 清空信息，并将格式初始化
@@ -309,7 +306,6 @@ class adminWindow(QtWidgets.QMainWindow,Ui_adminWindow):
            return
         else:
             sys.exit(self.app.exec())
-
 
 
 class adminUserManage(QtWidgets.QMainWindow,Ui_adminUserManageWidget):
