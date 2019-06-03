@@ -128,8 +128,19 @@ class adminPutaway(QtWidgets.QMainWindow,Ui_adminPutaway):
                                     book_name,book_author, book_kind, book_number, book_left, book_lending) \
                                     VALUES(%s, %s, %s, %s, %s, %s)", (tempname, tempauthor, tempkind, tempno, tempnum, 0))
                     con.commit()
-                    QMessageBox.warning(self, "", "书籍上架成功", QMessageBox.Ok)
-                    self.putBook.emit()
+                    reply = QMessageBox.question(self, '信息', '上架成功，是否继续？',
+                                                 QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+                    if reply == QMessageBox.Yes:
+                        self.adminPutawayNameEdit.clear()
+                        self.adminPutawayKindEdit.clear()
+                        self.adminPutawayNumEdit.clear()
+                        self.adminPutawayNoEdit.clear()
+                        self.adminPutawayAuthor.clear()
+                        self.putBook.emit()
+                        return
+                    else:
+                        self.putBook.emit()
+                        self.adminPutawayBack()
                 except Exception as e:
                     con.rollback()
                     print (e)
@@ -258,9 +269,6 @@ class adminBookManage(QtWidgets.QMainWindow,Ui_adminBookManage):
             self.adminBookTableWidget.setItem(i, 5, QTableWidgetItem(str(self.results[i][6])))
 
 
-
-
-
     def adminBookManageBack(self, results):
         self.adminBookFindEdit.clear()
         self.adminBookTableWidget.clearContents()                                                                       # 清空信息，并将格式初始化
@@ -298,7 +306,6 @@ class adminWindow(QtWidgets.QMainWindow,Ui_adminWindow):
            return
         else:
             sys.exit(self.app.exec())
-
 
 
 class adminUserManage(QtWidgets.QMainWindow,Ui_adminUserManageWidget):
@@ -358,7 +365,7 @@ class adminUserManage(QtWidgets.QMainWindow,Ui_adminUserManageWidget):
                 j += 1
             self.adminUserLab.setText(results[0][1])
         else:
-            QMessageBox.warning(self,"警告", '抱歉，没有找到与%s有关的书。'%(tempusername), QMessageBox.Ok)
+            QMessageBox.warning(self,"警告", '抱歉，账号输入有误，请重新输入。',  QMessageBox.Ok)
 
 
 def adminFindFunction(bookData=None, bookKind=None):
@@ -398,7 +405,6 @@ def adminUserFindFunction(userData):
         con.close()
         return results
     except:
-        print('获取失败')
         cursor.close()
         con.close()
         p = tuple()
